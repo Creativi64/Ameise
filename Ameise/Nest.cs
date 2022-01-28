@@ -44,149 +44,63 @@ namespace Ameise
         /// <returns>true if it deployed False if not</returns>
         public bool depolyAmeiseFromNest(Guid IdentifierNest)
         {
-            //bool Deployed = false;
-
-            //// Check Depoly pos
-            //int[] directions = new int[4];
-            //int i = 0;
-            //Random rnd = new Random();
-            //do
-            //{
-            //    switch (rnd.Next(1, 5))
-            //    {
-            //        case 1:
             if (posNest.X + 1 <= Game.Feld[0].Count - 1)
             {
                 if (Game.Feld[(int)posNest.X + 1][(int)posNest.Y].State == FieldState.wakable && Game.Feld[(int)posNest.X + 1][(int)posNest.Y].Ameis == null)
                 {
                     // Right
 
-                    if (IdentifierNest != Guid.Empty)
-                    {
-                        // Chose The Specific
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveRight();
-                    }
-                    else
-                    {
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Game.Nester[0].ameisen.Pop();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveRight();
-                    }
-                    //i = 500;
-                    //break;
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
+                    Engine.Draw();
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveRight();
+
                     return true;
                 }
             }
 
-            //directions[0]++;
-
-            //    break;
-
-            //case 2:
             if (posNest.Y - 1 >= 0)
             {
                 if (Game.Feld[(int)posNest.X][(int)posNest.Y - 1].State == FieldState.wakable && Game.Feld[(int)posNest.X][(int)posNest.Y - 1].Ameis == null)
                 {
                     //up
-                    if (IdentifierNest != Guid.Empty)
-                    {
-                        // Chose The Specific
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveUp();
-                    }
-                    else
-                    {
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Game.Nester[0].ameisen.Pop();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveUp();
-                    }
-                    //i = 500;
-                    //break;
-                    return true;
+
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
+                    Engine.Draw();
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveUp();
                 }
             }
-            //directions[1]++;
 
-            //    break;
-
-            //case 3:
             if (posNest.Y + 1 <= Game.Feld.Count - 1)
             {
                 if (Game.Feld[(int)posNest.X][(int)posNest.Y + 1].State == FieldState.wakable && Game.Feld[(int)posNest.X][(int)posNest.Y + 1].Ameis == null)
                 {
                     //down
-                    if (IdentifierNest != Guid.Empty)
-                    {
-                        // Chose The Specific
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveDown();
-                    }
-                    else
-                    {
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Game.Nester[0].ameisen.Pop();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveDown();
-                    }
-                    //i = 500;
-                    //break;
+
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
+                    Engine.Draw();
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveDown();
+
                     return true;
                 }
             }
-            //directions[2]++;
 
-            //    break;
-
-            //case 4:
             if (posNest.X - 1 >= 0)
             {
                 if (Game.Feld[(int)posNest.X - 1][(int)posNest.Y].State == FieldState.wakable && Game.Feld[(int)posNest.X - 1][(int)posNest.Y].Ameis == null)
                 {
                     //left
-                    if (IdentifierNest != Guid.Empty)
-                    {
-                        // Chose The Specific
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveLeft();
-                    }
-                    else
-                    {
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Game.Nester[0].ameisen.Pop();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
-                        Engine.Draw();
-                        Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveLeft();
-                    }
-                    //i = 500;
-                    //break;
+
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
+                    Engine.Draw();
+                    Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveLeft();
+
                     return true;
                 }
             }
-
-            //directions[3]++;
-
-            //        break;
-            //}
-
-            //foreach (var item in directions)
-            //{
-            //    if (item > 0)
-            //    {
-            //        i++;
-            //    }
-            //}
-            //} while (i < 4);
-             
             return false;
         }
 
@@ -277,14 +191,16 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         if (Game.Feld[X][Y].Ameis != null)
                         {
-                            this.ameisen.Push(Game.Feld[X][Y].Ameis);
+                            Game.Feld[X][Y].Ameis.Deployed =false;
+                            Game.Feld[X][Y].Ameis.BackHome();
+                            this.ameisen.Push(Game.Feld[X][Y].Ameis); 
                             Game.Feld[X][Y].Ameis = null;
                         }
                     }
@@ -304,13 +220,15 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         if (Game.Feld[X][Y].Ameis != null)
                         {
+                            Game.Feld[X][Y].Ameis.Deployed = false;
+                            Game.Feld[X][Y].Ameis.BackHome();
                             this.ameisen.Push(Game.Feld[X][Y].Ameis);
                             Game.Feld[X][Y].Ameis = null;
                         }
@@ -331,13 +249,15 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         if (Game.Feld[X][Y].Ameis != null)
                         {
+                            Game.Feld[X][Y].Ameis.Deployed = false;
+                            Game.Feld[X][Y].Ameis.BackHome();
                             this.ameisen.Push(Game.Feld[X][Y].Ameis);
                             Game.Feld[X][Y].Ameis = null;
                         }
@@ -359,21 +279,25 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         if (Game.Feld[X][Y].Ameis != null)
                         {
+                            Game.Feld[X][Y].Ameis.Deployed = false;
+                            Game.Feld[X][Y].Ameis.BackHome();
                             this.ameisen.Push(Game.Feld[X][Y].Ameis);
                             Game.Feld[X][Y].Ameis = null;
                         }
                     }
                 }
             }
-
-            Game.UnsetScan();
+            if (Engine.Scan)
+            {
+                Game.UnsetScan();
+            }
         }
 
         public void RecallAmeis()
@@ -384,6 +308,7 @@ namespace Ameise
             foreach (var item in posAmeisen)
             {
                 Game.Feld[(int)item.X][(int)item.Y].Ameis.GotoHome();
+
                 // ameise go home
                 //ameise.Pickup
                 pickupSurroundingAmeise();

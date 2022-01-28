@@ -18,7 +18,6 @@ namespace Ameise
 
         public Vector2 NestPos { get; }
 
-
         public long Timesearched
         {
             get { return timesearched; }
@@ -410,11 +409,13 @@ namespace Ameise
         public static int AnzahlAmeisen = 0;
 
         public Guid Idenifier { get; }
+
         public Color Team { get; }
 
         public bool Deployed = false;
 
         private Vector2 pos;
+
         public Vector2 LastPos { get; private set; }
 
         private int rotation;
@@ -441,10 +442,11 @@ namespace Ameise
         public Amei(Vector2 Position, Color Col)
         {
             Idenifier = Guid.NewGuid();
-            brn = new Brain( Position);
-            pos = Position; 
+            brn = new Brain(Position);
+            pos = Position;
             rotation = 0;
             Team = Col;
+
             //Game.Feld[(int)Position.X][(int)Position.Y].Ameis = this;
             Amei.AnzahlAmeisen++;
         }
@@ -485,9 +487,9 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         if (Game.Feld[X][Y].Item.Count > 0)
@@ -514,9 +516,9 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         for (int i = 0; i < Game.Feld[X][Y].Item.Count; i++)
@@ -540,9 +542,9 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         for (int i = 0; i < Game.Feld[X][Y].Item.Count; i++)
@@ -567,9 +569,9 @@ namespace Ameise
                     //Console.Write(X + "<>" + (Y) + ";");
                     if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        Game.Feld[X][Y].Scanned = true;
                         if (Engine.Scan)
                         {
+                            Game.Feld[X][Y].Scanned = true;
                             Engine.Draw();
                         }
                         for (int i = 0; i < Game.Feld[X][Y].Item.Count; i++)
@@ -579,10 +581,20 @@ namespace Ameise
                     }
                 }
             }
-            Game.UnsetScan();
+            if (Engine.Scan)
+            {
+                Game.UnsetScan();
+            }
         }
 
-        
+        public void BackHome()
+        {
+            if (this.Deployed == false)
+            {
+                this.pos = brn.NestPos;
+                this.LastPos = brn.NestPos;
+            }
+        }
 
         public void MoveUp(bool mark = true)
         {
@@ -790,8 +802,6 @@ namespace Ameise
 
         public void GotoHome()
         {
-           
-
             Stack<Node> path = brn.astar.FindPath(Pos, brn.NestPos);
 
             if (path != null)
@@ -806,18 +816,18 @@ namespace Ameise
                     }
                     else if (Pos.X < pat.Position.X)
                     {
-                         MoveRight();
+                        MoveRight();
                     }
-                    else if ( Pos.Y > pat.Position.Y)
+                    else if (Pos.Y > pat.Position.Y)
                     {
-                         MoveUp();
+                        MoveUp();
                     }
                     else if (Pos.Y < pat.Position.Y)
                     {
-                       MoveDown();
+                        MoveDown();
                     }
                 }
-               TryCollect();
+                TryCollect();
             }
             else
             {
@@ -826,6 +836,7 @@ namespace Ameise
                 return;
             }
         }
+
         private static void PossitionAmeise(Amei Ameise)
         {
             Game.Feld[(int)Ameise.Pos.X][(int)Ameise.Pos.Y].Ameis = Ameise;

@@ -38,7 +38,7 @@ namespace Ameise
             AllocConsole();
             InitializeComponent();
             Thread.Sleep(250);
-            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality, true, true);
+            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality,false, true);
 
             //Game.Feld[0][0].Nest = this.Nest;
 
