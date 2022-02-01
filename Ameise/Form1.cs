@@ -38,11 +38,20 @@ namespace Ameise
             AllocConsole();
             InitializeComponent();
             Thread.Sleep(250);
-            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality,false, true);
+            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality, true, true, 3);
 
             //Game.Feld[0][0].Nest = this.Nest;
-
             AktivesNest = Game.Nester[0].Idenifier;
+            foreach (var item in Game.Nester)
+            {
+                lib_Nester.Items.Add(item.Idenifier);
+            }
+
+            foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
+            {
+                lib_Ameisen.Items.Add(item.Idenifier);
+            }
+
             AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
 
             Console.WriteLine("START");
@@ -75,40 +84,26 @@ namespace Ameise
             //GC.Collect();
         }
 
-        private static bool FindStart(Tile bk)
-        {
-            if (bk.State == FieldState.Start)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private static bool FindEnd(Tile bk)
-        {
-            if (bk.State == FieldState.Ende)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void Btn_SetStart_Click(object sender, EventArgs e)
         {
-            Game.Nester[0].RecallAmeis();
+            Game.Nester[Nest.getActiveNest(AktivesNest)].RecallAmeis();
             Game.ResetGame();
             Engine.Draw();
         }
 
         private void Btn_SetEnd_Click(object sender, EventArgs e)
         {
-            Game.Nester[0].depolyAmeiseFromNest(AktivesNest);
+            Game.Nester[Nest.getActiveNest(AktivesNest)].depolyAmeiseFromNest(AktivesNest);
+            lib_Ameisen.Items.Clear();
+            foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
+            {
+                lib_Ameisen.Items.Add(item.Idenifier);
+            }
+            lib_AmeisenImFeld.Items.Clear();
+            foreach (var item in Nest.getAllAmeiseInField())
+            {
+                lib_AmeisenImFeld.Items.Add(item.ToString());
+            }
             Engine.Draw();
         }
 
@@ -119,6 +114,24 @@ namespace Ameise
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Engine.Draw();
+        }
+
+        private void Recall_Click(object sender, EventArgs e)
+        {
+            Game.Nester[Nest.getActiveNest(AktivesNest)].RecallAmeis();
+
+            lib_Ameisen.Items.Clear();
+            foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
+            {
+                lib_Ameisen.Items.Add(item.Idenifier);
+            }
+            lib_AmeisenImFeld.Items.Clear();
+            foreach (var item in Nest.getAllAmeiseInField())
+            {
+                lib_AmeisenImFeld.Items.Add(item.ToString());
+            }
+
             Engine.Draw();
         }
 
@@ -319,6 +332,28 @@ namespace Ameise
 
         private void BgW_Ameins_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
+        }
+
+        private void lib_Ameisen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AktiveAmeise = Guid.Parse(lib_Ameisen.SelectedItem.ToString());
+        }
+
+        private void lib_Nester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AktivesNest = Guid.Parse(lib_Nester.SelectedItem.ToString());
+            AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
+            lib_Ameisen.Items.Clear();
+
+            foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
+            {
+                lib_Ameisen.Items.Add(item.Idenifier);
+            }
+        }
+
+        private void lib_AmeisenImFeld_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AktiveAmeise = Guid.Parse(lib_AmeisenImFeld.SelectedItem.ToString());
         }
     }
 }

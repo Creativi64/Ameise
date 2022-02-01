@@ -185,7 +185,8 @@ namespace Ameise
                 {
                     switch (Game.Feld[a][i].State)
                     {
-                        case FieldState.wakable:
+                        case FieldState.Blocked:
+                        case FieldState.Wakable:
 
                             G_Feld.DrawImage(til.FeldLeer, Game.Feld[a][i].PosLOben);
                             if (Game.Feld[a][i].Item.Count != 0)
@@ -194,7 +195,18 @@ namespace Ameise
                             }
                             if (Game.Feld[a][i].Nest != null)
                             {
-                                G_Feld.DrawImage(til.Nest, Game.Feld[a][i].PosLOben);
+                                Bitmap b = new(til.Ameise.Width, til.Ameise.Height);
+                                Graphics gr = Graphics.FromImage(b);
+                                gr.SmoothingMode = Game.GraficMode;
+
+                                gr.DrawImage(til.Nest, new Point(0, 0));
+
+                                SolidBrush p = new(Game.Feld[a][i].Nest.Team);
+
+                                float ofset = (float)3 / (float)8;
+
+                                gr.FillEllipse(p, new RectangleF((float)Game.Height_X * (float)ofset, (float)Game.Height_Y * (float)ofset, Game.Height_X / 4, Game.Height_Y / 4));
+                                G_Feld.DrawImage(b, Game.Feld[a][i].PosLOben);
                             }
                             if (Game.Feld[a][i].Ameis != null)
                             {
@@ -243,7 +255,7 @@ namespace Ameise
 
                             break;
 
-                        case FieldState.notWakable:
+                        case FieldState.NotWakable:
 
                             G_Feld.DrawImage(til.FeldVoll, Game.Feld[a][i].PosLOben);
                             if (Game.Feld[a][i].Item.Count != 0)

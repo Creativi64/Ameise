@@ -142,7 +142,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Right");
@@ -156,7 +156,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Above");
@@ -170,7 +170,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("below");
@@ -207,7 +207,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Up");
@@ -221,7 +221,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Right");
@@ -234,7 +234,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("left");
@@ -271,7 +271,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("bewlow");
@@ -285,7 +285,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Right");
@@ -299,7 +299,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("left");
@@ -337,7 +337,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("left");
@@ -350,7 +350,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("Above");
@@ -364,7 +364,7 @@ namespace Ameise
                                     }
                                     else
                                     {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.notWakable)
+                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
                                         {
                                             surrounded++;
                                             Console.WriteLine("below");
@@ -387,8 +387,18 @@ namespace Ameise
                     }
                 }
 
+                if (amei.Inventar.Count > 2)
+                {
+                    amei.GotoHome();
+
+                    Game.Nester[0].transfareItemsFromAmeise(amei);
+                }
+
                 // continue random Move
-            } while (amei.Inventar.Count < Game.Items);
+            } while (amei.Inventar.Count+Game.Nester[0].Inventar.Count< Game.Items);
+
+            amei.GotoHome();
+            Game.Nester[0].transfareItemsFromAmeise(amei);
 
             stopWatch.Stop();
             timesearched += stopWatch.ElapsedTicks;
@@ -606,7 +616,7 @@ namespace Ameise
 
                 if (--Y >= 0)
                 {
-                    if (Game.Feld[(int)Pos.X][Y].State == FieldState.wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
+                    if (Game.Feld[(int)Pos.X][Y].State == FieldState.Wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
                     {
                         pos.Y = Y;
                         Game.Feld[(int)LastPos.X][(int)LastPos.Y].Ameis = null;
@@ -633,7 +643,7 @@ namespace Ameise
 
                 if (++Y <= Game.Feld.Count - 1)
                 {
-                    if (Game.Feld[(int)Pos.X][Y].State == FieldState.wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
+                    if (Game.Feld[(int)Pos.X][Y].State == FieldState.Wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
                     {
                         pos.Y = Y;
                         Game.Feld[(int)LastPos.X][(int)LastPos.Y].Ameis = null;
@@ -660,7 +670,7 @@ namespace Ameise
 
                 if (++X <= Game.Feld[0].Count - 1)
                 {
-                    if (Game.Feld[X][(int)Pos.Y].State == FieldState.wakable && Game.Feld[X][(int)Pos.Y].Ameis == null && Game.Feld[X][(int)Pos.Y].Nest == null)
+                    if (Game.Feld[X][(int)Pos.Y].State == FieldState.Wakable && Game.Feld[X][(int)Pos.Y].Ameis == null && Game.Feld[X][(int)Pos.Y].Nest == null)
                     {
                         pos.X = X;
                         Game.Feld[(int)LastPos.X][(int)LastPos.Y].Ameis = null;
@@ -687,7 +697,7 @@ namespace Ameise
 
                 if (--X >= 0)
                 {
-                    if (Game.Feld[X][(int)Pos.Y].State == FieldState.wakable && Game.Feld[X][(int)Pos.Y].Ameis == null && Game.Feld[X][(int)Pos.Y].Nest == null)
+                    if (Game.Feld[X][(int)Pos.Y].State == FieldState.Wakable && Game.Feld[X][(int)Pos.Y].Ameis == null && Game.Feld[X][(int)Pos.Y].Nest == null)
                     {
                         pos.X = X;
                         Game.Feld[(int)LastPos.X][(int)LastPos.Y].Ameis = null;
@@ -740,13 +750,13 @@ namespace Ameise
 
                         if (++X <= Game.Feld[0].Count - 1)
                         {
-                            if (Game.Feld[X][(int)Pos.Y].State == FieldState.notWakable)
+                            if (Game.Feld[X][(int)Pos.Y].State == FieldState.NotWakable)
                             {
-                                Game.Feld[X][(int)Pos.Y].State = FieldState.wakable;
+                                Game.Feld[X][(int)Pos.Y].State = FieldState.Wakable;
                             }
                             else
                             {
-                                Game.Feld[X][(int)Pos.Y].State = FieldState.notWakable;
+                                Game.Feld[X][(int)Pos.Y].State = FieldState.NotWakable;
                             }
                         }
 
@@ -756,13 +766,13 @@ namespace Ameise
 
                         if (++Y <= Game.Feld.Count - 1)
                         {
-                            if (Game.Feld[(int)Pos.X][Y].State == FieldState.notWakable)
+                            if (Game.Feld[(int)Pos.X][Y].State == FieldState.NotWakable)
                             {
-                                Game.Feld[(int)Pos.X][Y].State = FieldState.wakable;
+                                Game.Feld[(int)Pos.X][Y].State = FieldState.Wakable;
                             }
                             else
                             {
-                                Game.Feld[(int)Pos.X][Y].State = FieldState.notWakable;
+                                Game.Feld[(int)Pos.X][Y].State = FieldState.NotWakable;
                             }
                         }
                         break;
@@ -771,13 +781,13 @@ namespace Ameise
 
                         if (--X >= 0)
                         {
-                            if (Game.Feld[X][(int)Pos.Y].State == FieldState.notWakable)
+                            if (Game.Feld[X][(int)Pos.Y].State == FieldState.NotWakable)
                             {
-                                Game.Feld[X][(int)Pos.Y].State = FieldState.wakable;
+                                Game.Feld[X][(int)Pos.Y].State = FieldState.Wakable;
                             }
                             else
                             {
-                                Game.Feld[X][(int)Pos.Y].State = FieldState.notWakable;
+                                Game.Feld[X][(int)Pos.Y].State = FieldState.NotWakable;
                             }
                         }
                         break;
@@ -786,13 +796,13 @@ namespace Ameise
 
                         if (--Y >= 0)
                         {
-                            if (Game.Feld[(int)Pos.X][Y].State == FieldState.notWakable)
+                            if (Game.Feld[(int)Pos.X][Y].State == FieldState.NotWakable)
                             {
-                                Game.Feld[(int)Pos.X][Y].State = FieldState.wakable;
+                                Game.Feld[(int)Pos.X][Y].State = FieldState.Wakable;
                             }
                             else
                             {
-                                Game.Feld[(int)Pos.X][Y].State = FieldState.notWakable;
+                                Game.Feld[(int)Pos.X][Y].State = FieldState.NotWakable;
                             }
                         }
                         break;
@@ -802,39 +812,155 @@ namespace Ameise
 
         public void GotoHome()
         {
-            Stack<Node> path = brn.astar.FindPath(Pos, brn.NestPos);
-
-            if (path != null)
+            List<Vector2> LandingPosition = new List<Vector2>();
+            const int SearchRaius = 1;
+            int X = (int)brn.NestPos.X;
+            int Y = (int)brn.NestPos.Y;
+            for (int j = 0; j < SearchRaius; j++)
             {
-                //move
-                foreach (var pat in path)
+                Y += 1;
+
+                // unten
+                for (int x = 0; x < 1 + (2 * j); x++)
                 {
-                    //Thread.Sleep(250);
-                    if (Pos.X > pat.Position.X)
+                    if (x != 0)
                     {
-                        MoveLeft();
+                        X += 1;
                     }
-                    else if (Pos.X < pat.Position.X)
+
+                    //Console.Write(X + "<>" + (Y) + ";");
+                    if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
                     {
-                        MoveRight();
-                    }
-                    else if (Pos.Y > pat.Position.Y)
-                    {
-                        MoveUp();
-                    }
-                    else if (Pos.Y < pat.Position.Y)
-                    {
-                        MoveDown();
+                        if (Engine.Scan)
+                        {
+                            Game.Feld[X][Y].Scanned = true;
+                            Engine.Draw();
+                        }
+                        if (Game.Feld[X][Y].State == FieldState.Wakable)
+                        {
+                            LandingPosition.Add(new Vector2(X, Y));
+                        }
                     }
                 }
-                TryCollect();
-            }
-            else
-            {
-                Console.WriteLine("Ameise Findet kein weg nach Hause");
 
-                return;
+                //Console.Write("\n");
+                X += 1;
+
+                // rechts
+                for (int y = 0; y < 3 + (2 * j); y++)
+                {
+                    if (y != 0)
+                    {
+                        Y -= 1;
+                    }
+
+                    //Console.Write(X + "<>" + (Y) + ";");
+                    if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                    {
+                        if (Engine.Scan)
+                        {
+                            Game.Feld[X][Y].Scanned = true;
+                            Engine.Draw();
+                        }
+                        if (Game.Feld[X][Y].State == FieldState.Wakable)
+                        {
+                            LandingPosition.Add(new Vector2(X, Y));
+                        }
+                    }
+                }
+
+                //Console.Write("\n");
+                X -= 1;
+
+                //Oben
+                for (int x = 0; x < 1 + (2 * j); x++)
+                {
+                    if (x != 0)
+                    {
+                        X -= 1;
+                    }
+
+                    //Console.Write(X + "<>" + (Y) + ";");
+                    if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                    {
+                        if (Engine.Scan)
+                        {
+                            Game.Feld[X][Y].Scanned = true;
+                            Engine.Draw();
+                        }
+                        if (Game.Feld[X][Y].State == FieldState.Wakable)
+                        {
+                            LandingPosition.Add(new Vector2(X, Y));
+                        }
+                    }
+                }
+
+                //Console.Write("\n");
+                X -= 1;
+
+                //Links
+
+                for (int y = 0; y < 3 + (2 * j); y++)
+                {
+                    if (y != 0)
+                    {
+                        Y += 1;
+                    }
+
+                    //Console.Write(X + "<>" + (Y) + ";");
+                    if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                    {
+                        if (Engine.Scan)
+                        {
+                            Game.Feld[X][Y].Scanned = true;
+                            Engine.Draw();
+                        }
+                        if (Game.Feld[X][Y].State == FieldState.Wakable)
+                        {
+                            LandingPosition.Add(new Vector2(X, Y));
+                        }
+                    }
+                }
             }
+            if (Engine.Scan)
+            {
+                Game.UnsetScan();
+            }
+
+            foreach (var item in LandingPosition)
+            {
+                Stack<Node> path = brn.astar.FindPath(Pos, item);
+
+                if (path != null)
+                {
+                    Console.WriteLine($"Pos {item.ToString()} nutzbar");
+                    //move
+                    foreach (var pat in path)
+                    {
+                        //Thread.Sleep(250);
+                        if (Pos.X > pat.Position.X)
+                        {
+                            MoveLeft();
+                        }
+                        else if (Pos.X < pat.Position.X)
+                        {
+                            MoveRight();
+                        }
+                        else if (Pos.Y > pat.Position.Y)
+                        {
+                            MoveUp();
+                        }
+                        else if (Pos.Y < pat.Position.Y)
+                        {
+                            MoveDown();
+                        }
+                    }
+                    return;
+                }
+
+                Console.WriteLine($"Pos {item.ToString()} nicht nutzbar");
+            }
+            Console.WriteLine("Keinene Weg nach hause Gefunden");
         }
 
         private static void PossitionAmeise(Amei Ameise)

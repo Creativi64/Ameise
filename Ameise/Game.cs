@@ -19,6 +19,9 @@ namespace Ameise
 
         public static readonly List<List<Tile>> Feld;
 
+        public static List<Entry> AlleAmeisen;
+
+        public static List<Entry> AlleNester;
         // Display Parameter ---------
 
         public static int StartY;
@@ -43,7 +46,7 @@ namespace Ameise
 
         public static SmoothingMode GraficMode = SmoothingMode.Default;
 
-        // Item ---------------------
+        // Items etc. ---------------------
         public static int Items;
 
         private static Stack<Point> notwa = new();
@@ -52,10 +55,14 @@ namespace Ameise
 
         public static List<Nest> Nester = new List<Nest>();
 
-       
-
         // Init -----------------
-        private static readonly Color[] p = { Color.Red };
+        private static readonly Color[] p = { Color.Red, Color.Aqua };
+
+        /*
+
+        Pathfinding Schliesßt nester nicht aus
+
+         */
 
         /// <summary>
         /// NEED TO be done to WORK
@@ -80,23 +87,162 @@ namespace Ameise
                 PlaceBocksItems();
             }
 
-            Feld[posNestX][posNestY].State = FieldState.wakable;
+            //Feld[posNestX][posNestY].State = FieldState.Wakable;
 
             if (genNest)
             {
                 foreach (var item in p)
                 {
-                    Nester.Add(new Nest(new Vector2(posNestX, posNestY), item, ErstelleteAmeisen));
-                    Feld[posNestX][posNestY].State = FieldState.wakable;
-                    Feld[posNestX][posNestY].Nest = Nester[Nester.Count - 1];
+                    if (Game.Feld[posNestX][posNestY].Nest == null)
+                    {
+                        Feld[posNestX][posNestY].State = FieldState.Blocked;
+                       
+                        Nester.Add(new Nest(new Vector2(posNestX, posNestY), item, ErstelleteAmeisen));
+                         Feld[posNestX][posNestY].Nest = Nester[Nester.Count - 1];
+                    }
+                    if (posNestX + 2 <= Game.Feld[0].Count - 1)
+                    {
+                        posNestX += 2;
+                    }
+                    else
+                    {
+                        if (posNestX + 2 <= Game.Feld.Count - 1)
+                        {
+                            posNestX += 2;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
             }
-
+            createPerimeter();
             //Engine observable = new Engine();
             //Observer observer = new Observer();
             //observable.SomethingHappened += observer.HandleEvent;
 
             //observable.DoSomething();
+        }
+
+        private static void createPerimeter()
+        {
+            foreach (var item in Game.Nester)
+            {
+                const int SearchRaius = 1;
+                int X = (int)item.posNest.X;
+                int Y = (int)item.posNest.Y;
+                for (int j = 0; j < SearchRaius; j++)
+                {
+                    Y += 1;
+
+                    // unten
+                    for (int x = 0; x < 1 + (2 * j); x++)
+                    {
+                        if (x != 0)
+                        {
+                            X += 1;
+                        }
+
+                        //Console.Write(X + "<>" + (Y) + ";");
+                        if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                        {
+                            if (Engine.Scan)
+                            {
+                                Game.Feld[X][Y].Scanned = true;
+                                Engine.Draw();
+                            }
+                            if (Game.Feld[X][Y].State == FieldState.NotWakable)
+                            {
+                                Game.Feld[X][Y].State = FieldState.Wakable;
+                            }
+                        }
+                    }
+
+                    //Console.Write("\n");
+                    X += 1;
+
+                    // rechts
+                    for (int y = 0; y < 3 + (2 * j); y++)
+                    {
+                        if (y != 0)
+                        {
+                            Y -= 1;
+                        }
+
+                        //Console.Write(X + "<>" + (Y) + ";");
+                        if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                        {
+                            if (Engine.Scan)
+                            {
+                                Game.Feld[X][Y].Scanned = true;
+                                Engine.Draw();
+                            }
+                            if (Game.Feld[X][Y].State == FieldState.NotWakable)
+                            {
+                                Game.Feld[X][Y].State = FieldState.Wakable;
+                            }
+                        }
+                    }
+
+                    //Console.Write("\n");
+                    X -= 1;
+
+                    //Oben
+                    for (int x = 0; x < 1 + (2 * j); x++)
+                    {
+                        if (x != 0)
+                        {
+                            X -= 1;
+                        }
+
+                        //Console.Write(X + "<>" + (Y) + ";");
+                        if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                        {
+                            if (Engine.Scan)
+                            {
+                                Game.Feld[X][Y].Scanned = true;
+                                Engine.Draw();
+                            }
+                            if (Game.Feld[X][Y].State == FieldState.NotWakable)
+                            {
+                                Game.Feld[X][Y].State = FieldState.Wakable;
+                            }
+                        }
+                    }
+
+                    //Console.Write("\n");
+                    X -= 1;
+
+                    //Links
+
+                    for (int y = 0; y < 3 + (2 * j); y++)
+                    {
+                        if (y != 0)
+                        {
+                            Y += 1;
+                        }
+
+                        //Console.Write(X + "<>" + (Y) + ";");
+                        if (X >= 0 && Y >= 0 && X <= Game.Feld[0].Count - 1 && Y <= Game.Feld.Count - 1)
+                        {
+                            if (Engine.Scan)
+                            {
+                                Game.Feld[X][Y].Scanned = true;
+                                Engine.Draw();
+                            }
+                            if (Game.Feld[X][Y].State == FieldState.NotWakable)
+                            {
+                                Game.Feld[X][Y].State = FieldState.Wakable;
+                            }
+                        }
+                    }
+                }
+                if (Engine.Scan)
+                {
+                    Game.UnsetScan();
+                }
+            }
         }
 
         static Game()
@@ -108,7 +254,7 @@ namespace Ameise
                 Feld.Add(new List<Tile>());
                 for (int a = 0; a < Height; a++)
                 {
-                    Feld[i].Add(new Tile(new Point(i * (Height_X + Abstand), a * (Height_Y + Abstand)), Height_X, Height_Y, Abstand, FieldState.wakable));
+                    Feld[i].Add(new Tile(new Point(i * (Height_X + Abstand), a * (Height_Y + Abstand)), Height_X, Height_Y, Abstand, FieldState.Wakable));
                 }
             }
             StartX = 100;
@@ -126,12 +272,12 @@ namespace Ameise
                 for (int a = 0; a < Feld[i].Count; a++)
                 {
                     Feld[a][i].Item.Clear();
-                    Feld[a][i].State = FieldState.wakable;
+                    Feld[a][i].State = FieldState.Wakable;
                 }
             }
             PlaceBocksItems();
 
-            Feld[0][0].State = FieldState.wakable;
+            Feld[0][0].State = FieldState.Wakable;
         }
 
         public static void RemoveBlocksItems()
@@ -141,7 +287,7 @@ namespace Ameise
                 for (int a = 0; a < Feld[i].Count; a++)
                 {
                     Feld[i][a].Item.Clear();
-                    Feld[i][a].State = FieldState.wakable;
+                    Feld[i][a].State = FieldState.Wakable;
                 }
             }
             Engine.Draw();
@@ -228,12 +374,12 @@ namespace Ameise
 
             foreach (var item in notwa)
             {
-                Feld[item.X][item.Y].State = FieldState.notWakable;
+                Feld[item.X][item.Y].State = FieldState.NotWakable;
             }
             int ii = 0;
             foreach (var item in items)
             {
-                if (Feld[item.X][item.Y].State != FieldState.notWakable)
+                if (Feld[item.X][item.Y].State != FieldState.NotWakable)
                 {
                     Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), ii.ToString()));
                     ii++;
@@ -246,6 +392,9 @@ namespace Ameise
 
         public static List<List<Node>> ConstructGrid()
         {
+           
+
+
             List<List<Node>> temp = new();
 
             for (int i = 0; i < Feld.Count; i++)
@@ -255,24 +404,16 @@ namespace Ameise
                 {
                     switch (Feld[i][j].State)
                     {
-                        case FieldState.wakable:
+                        case FieldState.Wakable:
                             temp[i].Add(new Node(new Vector2(i, j), true));
                             break;
 
-                        case FieldState.notWakable:
+                        case FieldState.NotWakable:
                             temp[i].Add(new Node(new Vector2(i, j), false));
                             break;
 
-                        case FieldState.Start:
-                            temp[i].Add(new Node(new Vector2(i, j), true));
-                            break;
-
-                        case FieldState.Ende:
-                            temp[i].Add(new Node(new Vector2(i, j), true));
-                            break;
-
-                        case FieldState.Path:
-                            temp[i].Add(new Node(new Vector2(i, j), true));
+                        case FieldState.Blocked:
+                            temp[i].Add(new Node(new Vector2(i, j), false));
                             break;
 
                         default:
@@ -287,15 +428,11 @@ namespace Ameise
 
     public enum FieldState
     {
-        wakable,
+        Wakable,
 
-        notWakable,
+        NotWakable,
 
-        Start,
-
-        Ende,
-
-        Path,
+        Blocked,
 
         Error
     }

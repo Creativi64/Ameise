@@ -47,6 +47,13 @@ namespace Ameise
             this.ChB_Scan = new System.Windows.Forms.CheckBox();
             this.BgW_Ameins = new System.ComponentModel.BackgroundWorker();
             this.TimeElapsed = new System.Windows.Forms.Label();
+            this.Recall = new System.Windows.Forms.Button();
+            this.lib_Nester = new System.Windows.Forms.ListBox();
+            this.lib_Ameisen = new System.Windows.Forms.ListBox();
+            this.lab_AmeisenImNest = new System.Windows.Forms.Label();
+            this.lab_Nester = new System.Windows.Forms.Label();
+            this.lib_AmeisenImFeld = new System.Windows.Forms.ListBox();
+            this.lab_AmeisenImFeld = new System.Windows.Forms.Label();
             this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -195,11 +202,85 @@ namespace Ameise
             this.TimeElapsed.Size = new System.Drawing.Size(0, 15);
             this.TimeElapsed.TabIndex = 14;
             // 
+            // Recall
+            // 
+            this.Recall.Location = new System.Drawing.Point(12, 118);
+            this.Recall.Name = "Recall";
+            this.Recall.Size = new System.Drawing.Size(75, 23);
+            this.Recall.TabIndex = 15;
+            this.Recall.Text = "Recall";
+            this.Recall.UseVisualStyleBackColor = true;
+            this.Recall.Click += new System.EventHandler(this.Recall_Click);
+            // 
+            // lib_Nester
+            // 
+            this.lib_Nester.FormattingEnabled = true;
+            this.lib_Nester.ItemHeight = 15;
+            this.lib_Nester.Location = new System.Drawing.Point(12, 176);
+            this.lib_Nester.Name = "lib_Nester";
+            this.lib_Nester.Size = new System.Drawing.Size(120, 94);
+            this.lib_Nester.TabIndex = 16;
+            this.lib_Nester.SelectedIndexChanged += new System.EventHandler(this.lib_Nester_SelectedIndexChanged);
+            // 
+            // lib_Ameisen
+            // 
+            this.lib_Ameisen.FormattingEnabled = true;
+            this.lib_Ameisen.ItemHeight = 15;
+            this.lib_Ameisen.Location = new System.Drawing.Point(12, 289);
+            this.lib_Ameisen.Name = "lib_Ameisen";
+            this.lib_Ameisen.Size = new System.Drawing.Size(120, 94);
+            this.lib_Ameisen.TabIndex = 17;
+            this.lib_Ameisen.SelectedIndexChanged += new System.EventHandler(this.lib_Ameisen_SelectedIndexChanged);
+            // 
+            // lab_AmeisenImNest
+            // 
+            this.lab_AmeisenImNest.AutoSize = true;
+            this.lab_AmeisenImNest.Location = new System.Drawing.Point(12, 273);
+            this.lab_AmeisenImNest.Name = "lab_AmeisenImNest";
+            this.lab_AmeisenImNest.Size = new System.Drawing.Size(97, 15);
+            this.lab_AmeisenImNest.TabIndex = 18;
+            this.lab_AmeisenImNest.Text = "Ameisen Im Nest";
+            // 
+            // lab_Nester
+            // 
+            this.lab_Nester.AutoSize = true;
+            this.lab_Nester.Location = new System.Drawing.Point(13, 155);
+            this.lab_Nester.Name = "lab_Nester";
+            this.lab_Nester.Size = new System.Drawing.Size(41, 15);
+            this.lab_Nester.TabIndex = 19;
+            this.lab_Nester.Text = "Nester";
+            // 
+            // lib_AmeisenImFeld
+            // 
+            this.lib_AmeisenImFeld.FormattingEnabled = true;
+            this.lib_AmeisenImFeld.ItemHeight = 15;
+            this.lib_AmeisenImFeld.Location = new System.Drawing.Point(12, 410);
+            this.lib_AmeisenImFeld.Name = "lib_AmeisenImFeld";
+            this.lib_AmeisenImFeld.Size = new System.Drawing.Size(120, 94);
+            this.lib_AmeisenImFeld.TabIndex = 20;
+            this.lib_AmeisenImFeld.SelectedIndexChanged += new System.EventHandler(this.lib_AmeisenImFeld_SelectedIndexChanged);
+            // 
+            // lab_AmeisenImFeld
+            // 
+            this.lab_AmeisenImFeld.AutoSize = true;
+            this.lab_AmeisenImFeld.Location = new System.Drawing.Point(12, 392);
+            this.lab_AmeisenImFeld.Name = "lab_AmeisenImFeld";
+            this.lab_AmeisenImFeld.Size = new System.Drawing.Size(92, 15);
+            this.lab_AmeisenImFeld.TabIndex = 21;
+            this.lab_AmeisenImFeld.Text = "Ameisen m Feld";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 613);
+            this.Controls.Add(this.lab_AmeisenImFeld);
+            this.Controls.Add(this.lib_AmeisenImFeld);
+            this.Controls.Add(this.lab_Nester);
+            this.Controls.Add(this.lab_AmeisenImNest);
+            this.Controls.Add(this.lib_Ameisen);
+            this.Controls.Add(this.lib_Nester);
+            this.Controls.Add(this.Recall);
             this.Controls.Add(this.TimeElapsed);
             this.Controls.Add(this.ChB_Scan);
             this.Controls.Add(this.Chb_Marks);
@@ -241,6 +322,13 @@ namespace Ameise
         private System.Windows.Forms.CheckBox ChB_Scan;
         private System.ComponentModel.BackgroundWorker BgW_Ameins;
         private System.Windows.Forms.Label TimeElapsed;
+        private System.Windows.Forms.Button Recall;
+        private System.Windows.Forms.ListBox lib_Nester;
+        private System.Windows.Forms.ListBox lib_Ameisen;
+        private System.Windows.Forms.Label lab_AmeisenImNest;
+        private System.Windows.Forms.Label lab_Nester;
+        private System.Windows.Forms.ListBox lib_AmeisenImFeld;
+        private System.Windows.Forms.Label lab_AmeisenImFeld;
     }
 }
 

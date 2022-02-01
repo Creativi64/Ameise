@@ -62,33 +62,33 @@ namespace Ameise
                 {
                     switch (feld[i][a].State)
                     {
-                        case FieldState.wakable:
+                        case FieldState.Wakable:
                             sb.Append(Wakable);
                             //Console.Write(Wakable);
                             break;
 
-                        case FieldState.notWakable:
+                        case FieldState.NotWakable:
                             sb.Append(NotWakable);
                             //Console.Write(NotWakable);
                             break;
 
-                        case FieldState.Start:
-                            sb.Append(Start);
+                        //case FieldState.Start:
+                        //    sb.Append(Start);
 
-                            //Console.Write(Start);
-                            break;
+                        //    //Console.Write(Start);
+                        //    break;
 
-                        case FieldState.Ende:
-                            sb.Append(End);
+                        //case FieldState.Ende:
+                        //    sb.Append(End);
 
-                            //Console.Write(End);
-                            break;
+                        //    //Console.Write(End);
+                        //    break;
 
-                        case FieldState.Path:
-                            sb.Append(Path);
+                        //case FieldState.Path:
+                        //    sb.Append(Path);
 
-                            //Console.Write(Path);
-                            break;
+                        //    //Console.Write(Path);
+                        //    break;
 
                         default:
                             sb.Append(Errot);

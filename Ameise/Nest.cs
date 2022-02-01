@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using System.Drawing;
+using System.Threading;
 
 namespace Ameise
 {
@@ -16,9 +17,9 @@ namespace Ameise
 
         public readonly Color Team;
 
-        private Stack<Amei> ameisen = new Stack<Amei>();
+        public Stack<Amei> ameisen = new Stack<Amei>();
 
-        private List<Item> Inventar = new List<Item>();
+        public List<Item> Inventar = new List<Item>();
 
         public Nest(Vector2 posNest, Color Team, int Ameisen)
         {
@@ -31,12 +32,6 @@ namespace Ameise
             }
         }
 
-        /*
-
-        BISSEL RIGGED
-
-         */
-
         /// <summary>
         /// Deply a Amise
         /// </summary>
@@ -46,13 +41,14 @@ namespace Ameise
         {
             if (posNest.X + 1 <= Game.Feld[0].Count - 1)
             {
-                if (Game.Feld[(int)posNest.X + 1][(int)posNest.Y].State == FieldState.wakable && Game.Feld[(int)posNest.X + 1][(int)posNest.Y].Ameis == null)
+                if (Game.Feld[(int)posNest.X + 1][(int)posNest.Y].State == FieldState.Wakable && Game.Feld[(int)posNest.X + 1][(int)posNest.Y].Ameis == null)
                 {
                     // Right
 
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
                     Engine.Draw();
+                    Thread.Sleep(250);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveRight();
 
                     return true;
@@ -61,26 +57,28 @@ namespace Ameise
 
             if (posNest.Y - 1 >= 0)
             {
-                if (Game.Feld[(int)posNest.X][(int)posNest.Y - 1].State == FieldState.wakable && Game.Feld[(int)posNest.X][(int)posNest.Y - 1].Ameis == null)
+                if (Game.Feld[(int)posNest.X][(int)posNest.Y - 1].State == FieldState.Wakable && Game.Feld[(int)posNest.X][(int)posNest.Y - 1].Ameis == null)
                 {
                     //up
 
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
                     Engine.Draw();
+                    Thread.Sleep(250);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveUp();
                 }
             }
 
             if (posNest.Y + 1 <= Game.Feld.Count - 1)
             {
-                if (Game.Feld[(int)posNest.X][(int)posNest.Y + 1].State == FieldState.wakable && Game.Feld[(int)posNest.X][(int)posNest.Y + 1].Ameis == null)
+                if (Game.Feld[(int)posNest.X][(int)posNest.Y + 1].State == FieldState.Wakable && Game.Feld[(int)posNest.X][(int)posNest.Y + 1].Ameis == null)
                 {
                     //down
 
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
                     Engine.Draw();
+                    Thread.Sleep(250);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveDown();
 
                     return true;
@@ -89,13 +87,14 @@ namespace Ameise
 
             if (posNest.X - 1 >= 0)
             {
-                if (Game.Feld[(int)posNest.X - 1][(int)posNest.Y].State == FieldState.wakable && Game.Feld[(int)posNest.X - 1][(int)posNest.Y].Ameis == null)
+                if (Game.Feld[(int)posNest.X - 1][(int)posNest.Y].State == FieldState.Wakable && Game.Feld[(int)posNest.X - 1][(int)posNest.Y].Ameis == null)
                 {
                     //left
 
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis = Nest.getFirstAmeiseFromNest(IdentifierNest);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.Deployed = true;
                     Engine.Draw();
+                    Thread.Sleep(250);
                     Game.Feld[(int)posNest.X][(int)posNest.Y].Ameis.MoveLeft();
 
                     return true;
@@ -161,9 +160,25 @@ namespace Ameise
             {
                 for (int a = 0; a < Game.Feld[i].Count; a++)
                 {
-                    if (Game.Feld[a][i].Ameis != null)
+                    if (Game.Feld[a][i].Ameis != null && Game.Feld[a][i].Ameis.Team == Team)
                     {
                         posAmeisen.Add(Game.Feld[a][i].Ameis.Pos);
+                    }
+                }
+            }
+            return posAmeisen.ToArray();
+        }
+
+        public static Guid[] getAllAmeiseInField()
+        {
+            List<Guid> posAmeisen = new List<Guid>();
+            for (int i = 0; i < Game.Feld.Count; i++)
+            {
+                for (int a = 0; a < Game.Feld[i].Count; a++)
+                {
+                    if (Game.Feld[a][i].Ameis != null)
+                    {
+                        posAmeisen.Add(Game.Feld[a][i].Ameis.Idenifier);
                     }
                 }
             }
@@ -198,9 +213,9 @@ namespace Ameise
                         }
                         if (Game.Feld[X][Y].Ameis != null)
                         {
-                            Game.Feld[X][Y].Ameis.Deployed =false;
+                            Game.Feld[X][Y].Ameis.Deployed = false;
                             Game.Feld[X][Y].Ameis.BackHome();
-                            this.ameisen.Push(Game.Feld[X][Y].Ameis); 
+                            this.ameisen.Push(Game.Feld[X][Y].Ameis);
                             Game.Feld[X][Y].Ameis = null;
                         }
                     }
@@ -300,6 +315,11 @@ namespace Ameise
             }
         }
 
+        public static int getActiveNest(Guid Identifier)
+        {
+            return Game.Nester.FindIndex(n => n.Idenifier == Identifier);
+        }
+
         public void RecallAmeis()
         {
             //get pos of ameisese
@@ -307,11 +327,26 @@ namespace Ameise
 
             foreach (var item in posAmeisen)
             {
-                Game.Feld[(int)item.X][(int)item.Y].Ameis.GotoHome();
+                try
+                {
+                    Game.Feld[(int)item.X][(int)item.Y].Ameis.GotoHome();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Kann nicht nach hause gehen Ist schon da? try pickup anyway");
+                }
 
                 // ameise go home
                 //ameise.Pickup
                 pickupSurroundingAmeise();
+            }
+        }
+
+        public void transfareItemsFromAmeise(Amei Ameise)
+        {
+            for (int i = 0; i < Ameise.Inventar.Count; i++)
+            {
+                this.Inventar.Add(Ameise.Inventar.Pop());
             }
         }
     }
