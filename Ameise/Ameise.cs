@@ -82,7 +82,7 @@ namespace Ameise
                 }
             }
 
-            // Oben
+            // Oberhalb
             if (amei.Pos.Y - 1 < 0)
             {
                 surrounded++;

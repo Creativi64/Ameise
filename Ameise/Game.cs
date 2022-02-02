@@ -96,9 +96,9 @@ namespace Ameise
                     if (Game.Feld[posNestX][posNestY].Nest == null)
                     {
                         Feld[posNestX][posNestY].State = FieldState.Blocked;
-                       
+
                         Nester.Add(new Nest(new Vector2(posNestX, posNestY), item, ErstelleteAmeisen));
-                         Feld[posNestX][posNestY].Nest = Nester[Nester.Count - 1];
+                        Feld[posNestX][posNestY].Nest = Nester[Nester.Count - 1];
                     }
                     if (posNestX + 2 <= Game.Feld[0].Count - 1)
                     {
@@ -327,12 +327,48 @@ namespace Ameise
             Engine.Draw();
         }
 
+        public static void generateNewItems(int Count = 2)
+        {
+            Random rnd = new();
+            int[] RandomX_Item = new int[With];
+            int[] RandomY_Item = new int[Height];
+
+            for (int i = 0; i < Count; i++)
+            {
+                RandomX_Item[i] = rnd.Next(0, With);
+            }
+
+            for (int i = 0; i < Count; i++)
+            {
+                RandomY_Item[i] = rnd.Next(0, Height);
+            }
+
+            for (int i = 0; i < Count; i++)
+            {
+                items.Push(new Point(RandomX_Item[i], RandomY_Item[i]));
+            }
+
+            foreach (var item in items)
+            {
+                if (Feld[item.X][item.Y].State != FieldState.NotWakable && Feld[item.X][item.Y].State != FieldState.Blocked)
+                {
+                    Items++;
+                    Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), items.Count.ToString()));
+                }
+            }
+
+            items.Clear();
+        }
+
         public static void PlaceBocksItems()
         {
             //notwa.Push(new Point( HORIZINTAL,VERTIKAL));
             Random rnd = new();
 
-            for (int c = 0; c < 6; c++)
+            int iBlockInteration = 6;
+            int iItemInteration = 1;
+
+            for (int c = 0; c < iBlockInteration; c++)
             {
                 int[] RandomX_Block = new int[With];
                 int[] RandomY_Block = new int[Height];
@@ -352,7 +388,7 @@ namespace Ameise
                 }
             }
 
-            for (int c = 0; c < 1; c++)
+            for (int c = 0; c < iItemInteration; c++)
             {
                 int[] RandomX_Item = new int[With];
                 int[] RandomY_Item = new int[Height];
@@ -392,9 +428,6 @@ namespace Ameise
 
         public static List<List<Node>> ConstructGrid()
         {
-           
-
-
             List<List<Node>> temp = new();
 
             for (int i = 0; i < Feld.Count; i++)

@@ -348,6 +348,7 @@ namespace Ameise
             {
                 this.Inventar.Add(Ameise.Inventar.Pop());
             }
+           Game.generateNewItems();
         }
     }
 }
