@@ -207,6 +207,9 @@ namespace Ameise
 
                                 gr.FillEllipse(p, new RectangleF((float)Game.Height_X * (float)ofset, (float)Game.Height_Y * (float)ofset, Game.Height_X / 4, Game.Height_Y / 4));
                                 G_Feld.DrawImage(b, Game.Feld[a][i].PosLOben);
+                                b.Dispose();
+                                p.Dispose();
+                                gr.Dispose();
                             }
                             if (Game.Feld[a][i].Ameis != null)
                             {

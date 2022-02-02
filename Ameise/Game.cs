@@ -379,7 +379,7 @@ namespace Ameise
             int ii = 0;
             foreach (var item in items)
             {
-                if (Feld[item.X][item.Y].State != FieldState.NotWakable)
+                if (Feld[item.X][item.Y].State != FieldState.NotWakable && Feld[item.X][item.Y].State != FieldState.Blocked)
                 {
                     Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), ii.ToString()));
                     ii++;

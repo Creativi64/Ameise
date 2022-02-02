@@ -59,6 +59,7 @@ namespace Ameise
             {
                 //GC.Collect(1,GCCollectionMode.Forced);
                 GC.WaitForPendingFinalizers();
+
                 if (bw.CancellationPending)
                 {
                     stopWatch.Stop();
@@ -83,6 +84,7 @@ namespace Ameise
                 {
                     do
                     {
+                        astar = new Astar(Game.ConstructGrid());
                         Stack<Node> path = astar.FindPath(amei.Pos, positionen[0]);
 
                         if (path != null)
@@ -112,6 +114,7 @@ namespace Ameise
                         }
                         else
                         {
+                            this.positionen.Clear();
                             Console.WriteLine("kein weg");
 
                             return;
@@ -389,16 +392,19 @@ namespace Ameise
 
                 if (amei.Inventar.Count > 2)
                 {
-                    amei.GotoHome();
-
-                    Game.Nester[0].transfareItemsFromAmeise(amei);
+                    if (amei.GotoHome())
+                    {
+                        Game.Nester[0].transfareItemsFromAmeise(amei);
+                    }
                 }
 
                 // continue random Move
-            } while (amei.Inventar.Count+Game.Nester[0].Inventar.Count< Game.Items);
+            } while (amei.Inventar.Count + Game.Nester[0].Inventar.Count < Game.Items);
 
-            amei.GotoHome();
-            Game.Nester[0].transfareItemsFromAmeise(amei);
+            if (amei.GotoHome())
+            {
+                Game.Nester[0].transfareItemsFromAmeise(amei);
+            }
 
             stopWatch.Stop();
             timesearched += stopWatch.ElapsedTicks;
@@ -810,7 +816,7 @@ namespace Ameise
             }
         }
 
-        public void GotoHome()
+        public bool GotoHome()
         {
             List<Vector2> LandingPosition = new List<Vector2>();
             const int SearchRaius = 1;
@@ -929,6 +935,7 @@ namespace Ameise
 
             foreach (var item in LandingPosition)
             {
+                brn.astar = new Astar(Game.ConstructGrid());
                 Stack<Node> path = brn.astar.FindPath(Pos, item);
 
                 if (path != null)
@@ -955,12 +962,13 @@ namespace Ameise
                             MoveDown();
                         }
                     }
-                    return;
+                    return true;
                 }
 
                 Console.WriteLine($"Pos {item.ToString()} nicht nutzbar");
             }
             Console.WriteLine("Keinene Weg nach hause Gefunden");
+            return false;
         }
 
         private static void PossitionAmeise(Amei Ameise)

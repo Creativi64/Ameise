@@ -216,6 +216,7 @@ namespace Ameise
                     st.Start();
                     TimeSpan ts;
                     this.BgW_Ameins.RunWorkerAsync();
+                   
                     while (this.BgW_Ameins.I‎sBusy)
                     {
                         ts = st.Elapsed;
@@ -225,6 +226,7 @@ namespace Ameise
                             ts.Hours, ts.Minutes, ts.Seconds,
                             ts.Milliseconds / 10);
                         Application.DoEv‎ents();
+                         
                     }
                 }
                 else
