@@ -48,6 +48,74 @@ namespace Ameise
             this.NestPos = NestPos;
         }
 
+        private int checksourroundings(Amei amei)
+        {
+            int surrounded = 0;
+
+            // rechts
+            if (amei.Pos.X + 1 >= Game.Feld[0].Count)
+            {
+                surrounded++;
+                Console.WriteLine("Rightnone");
+            }
+            else
+            {
+                if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
+                {
+                    surrounded++;
+                    Console.WriteLine("Right");
+                }
+            }
+
+            //links
+            if (amei.Pos.X - 1 < 0)
+            {
+                surrounded++;
+                Console.WriteLine("leftnone");
+            }
+            else
+            {
+                if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
+                {
+                    surrounded++;
+                    Console.WriteLine("left");
+                }
+            }
+
+            // Oben
+            if (amei.Pos.Y - 1 < 0)
+            {
+                surrounded++;
+                Console.WriteLine("Abovenone");
+            }
+            else
+            {
+                if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
+                {
+                    surrounded++;
+                    Console.WriteLine("Above");
+                }
+            }
+
+            // unterhalb
+            if (amei.Pos.Y + 1 >= Game.Feld.Count)
+            {
+                surrounded++;
+                Console.WriteLine("belownone");
+            }
+            else
+            {
+                if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
+                {
+                    surrounded++;
+                    Console.WriteLine("below");
+                }
+            }
+
+            Console.WriteLine("----");
+            return surrounded;
+        }
+
         public void Collect(Amei amei, BackgroundWorker bw)
         {
             TimeSpan ts;
@@ -136,51 +204,8 @@ namespace Ameise
                                 {
                                     amei.MoveRight();
                                     iNotMovedCountRight = 0;
-                                    int surrounded = 0;
 
-                                    if (amei.Pos.X + 1 >= Game.Feld[0].Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Rightnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Right");
-                                        }
-                                    }
-
-                                    if (amei.Pos.Y - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Abovenone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Above");
-                                        }
-                                    }
-
-                                    if (amei.Pos.Y + 1 >= Game.Feld.Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("belownone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("below");
-                                        }
-                                    }
-
-                                    if (surrounded == 3)
+                                    if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
                                         Console.WriteLine("surrounded");
@@ -202,49 +227,8 @@ namespace Ameise
                                 {
                                     amei.MoveUp();
                                     iNotMovedCountUp = 0;
-                                    int surrounded = 0;
-                                    if (amei.Pos.Y - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Upnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Up");
-                                        }
-                                    }
 
-                                    if (amei.Pos.X + 1 >= Game.Feld[0].Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Rightnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Right");
-                                        }
-                                    }
-                                    if (amei.Pos.X - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("leftnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("left");
-                                        }
-                                    }
-
-                                    if (surrounded == 3)
+                                    if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
                                         Console.WriteLine("surrounded");
@@ -266,50 +250,8 @@ namespace Ameise
                                 {
                                     amei.MoveDown();
                                     iNotMovedCountDown = 0;
-                                    int surrounded = 0;
-                                    if (amei.Pos.Y + 1 >= Game.Feld.Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("bewlownone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("bewlow");
-                                        }
-                                    }
 
-                                    if (amei.Pos.X + 1 >= Game.Feld[0].Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Rightnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Right");
-                                        }
-                                    }
-
-                                    if (amei.Pos.X - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("leftnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("left");
-                                        }
-                                    }
-
-                                    if (surrounded == 3)
+                                    if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
                                         Console.WriteLine("surrounded");
@@ -331,50 +273,8 @@ namespace Ameise
                                 {
                                     amei.MoveLeft();
                                     iNotMovedCountLeft = 0;
-                                    int surrounded = 0;
 
-                                    if (amei.Pos.X - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("leftnone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("left");
-                                        }
-                                    }
-                                    if (amei.Pos.Y - 1 < 0)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("Abovenone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("Above");
-                                        }
-                                    }
-
-                                    if (amei.Pos.Y + 1 >= Game.Feld.Count)
-                                    {
-                                        surrounded++;
-                                        Console.WriteLine("belownone");
-                                    }
-                                    else
-                                    {
-                                        if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
-                                        {
-                                            surrounded++;
-                                            Console.WriteLine("below");
-                                        }
-                                    }
-
-                                    if (surrounded == 3)
+                                    if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
                                         Console.WriteLine("surrounded");
