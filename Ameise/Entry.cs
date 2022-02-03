@@ -25,7 +25,7 @@ namespace Ameise
 
         public override string ToString()
         {
-            return $"{Idenifier.ToString()}-{Name}-{Team.ToString()}-{Pos.ToString()}-";
+            return $"{Team.ToString()}-{Idenifier.ToString()}-{Name}-{Pos.ToString()}";
         }
 
     }

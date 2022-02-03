@@ -19,9 +19,9 @@ namespace Ameise
 
         public static readonly List<List<Tile>> Feld;
 
-        public static List<Entry> AlleAmeisen;
+        public static List<Entry> AlleAmeisen = new List<Entry>();
 
-        public static List<Entry> AlleNester;
+        public static List<Entry> AlleNester = new List<Entry>();
         // Display Parameter ---------
 
         public static int StartY;
@@ -99,6 +99,11 @@ namespace Ameise
 
                         Nester.Add(new Nest(new Vector2(posNestX, posNestY), item, ErstelleteAmeisen));
                         Feld[posNestX][posNestY].Nest = Nester[Nester.Count - 1];
+                        AlleNester.Add(new Entry(Nester[Nester.Count - 1].Idenifier, Nester[Nester.Count - 1].posNest, Nester[Nester.Count - 1].Team, Nester[Nester.Count - 1].Team.ToString()));
+                        foreach (var Ameise in Nester[Nester.Count-1].ameisen)
+                        {
+                            AlleAmeisen.Add(new Entry(Ameise.Idenifier, Ameise.Pos, Ameise.Team, Ameise.Team.ToString()));
+                        }
                     }
                     if (posNestX + 2 <= Game.Feld[0].Count - 1)
                     {
@@ -266,7 +271,9 @@ namespace Ameise
 
         public static void ResetGame()
         {
-            //RemoveBlocksItems();
+            // Update so that the Ameise Returns
+
+            RemoveBlocksItems();
             for (int i = 0; i < Feld.Count; i++)
             {
                 for (int a = 0; a < Feld[i].Count; a++)
