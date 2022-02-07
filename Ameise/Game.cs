@@ -8,6 +8,10 @@ using AStarSharp;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.CompilerServices;
+ 
+using System.ComponentModel;
+ 
+using System.Windows.Forms;
 
 namespace Ameise
 {
@@ -22,6 +26,9 @@ namespace Ameise
         public static List<Entry> AlleAmeisen = new List<Entry>();
 
         public static List<Entry> AlleNester = new List<Entry>();
+        
+        public static BindingList<Entry> bindlist = new BindingList<Entry>();
+
         // Display Parameter ---------
 
         public static int StartY;
@@ -73,6 +80,7 @@ namespace Ameise
         /// <param name="GraficMode">The Render Quality</param>
         public static void init(Graphics FeldGrafik, int With, int Height, SmoothingMode GraficMode, bool PlaceBlocksItems = true, bool genNest = true, int ErstelleteAmeisen = 1, int posNestX = 0, int posNestY = 0)
         {
+
             Engine.FeldGrafik = FeldGrafik;
 
             FeldGrafik.SmoothingMode = GraficMode;
@@ -81,6 +89,11 @@ namespace Ameise
             FeldGrafik.TranslateTransform(StartX, StartY);
 
             Game.GraficMode = GraficMode;
+
+            bindlist = new BindingList<Entry>();
+            bindlist.AllowNew = true;
+            bindlist.AllowEdit = true;
+            bindlist.RaiseListChangedEvents = true;
 
             if (PlaceBlocksItems)
             {
@@ -103,6 +116,7 @@ namespace Ameise
                         foreach (var Ameise in Nester[Nester.Count-1].ameisen)
                         {
                             AlleAmeisen.Add(new Entry(Ameise.Idenifier, Ameise.Pos, Ameise.Team, Ameise.Team.ToString()));
+                            bindlist.Add(new Entry(Ameise.Idenifier, Ameise.Pos, Ameise.Team, Ameise.Team.ToString()));
                         }
                     }
                     if (posNestX + 2 <= Game.Feld[0].Count - 1)
