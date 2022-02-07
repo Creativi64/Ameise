@@ -217,14 +217,15 @@ namespace Ameise
             // 
             // lib_Nester
             // 
+            this.lib_Nester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lib_Nester.FormattingEnabled = true;
             this.lib_Nester.HorizontalScrollbar = true;
             this.lib_Nester.ItemHeight = 15;
             this.lib_Nester.Location = new System.Drawing.Point(12, 176);
             this.lib_Nester.Name = "lib_Nester";
             this.lib_Nester.Size = new System.Drawing.Size(120, 94);
-            this.lib_Nester.TabIndex = 16;
-            this.lib_Nester.Click += new System.EventHandler(this.lib_Nester_Click);
+            this.lib_Nester.TabIndex = 16; 
+            this.lib_Nester.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lib_Nester_DrawItem);
             this.lib_Nester.SelectedIndexChanged += new System.EventHandler(this.lib_Nester_SelectedIndexChanged);
             // 
             // lib_Ameisen

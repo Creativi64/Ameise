@@ -23,31 +23,18 @@ namespace Ameise
          O__X
          */
 
-        //public Amei ameise;
-
-        //public Nest Nest;
-
-        //public Amei ameise1;
         private Stopwatch st;
 
         public Guid AktiveAmeise { get; set; }
 
         public Guid AktivesNest { get; set; }
 
-        //public BindingList<Entry> bindlist = new BindingList<Entry>();
-        public object localList;
-
         public void updateall()
         {
             this.AktiveAmei.Text = AktiveAmeise.ToString();
             this.AktiveNest.Text = AktivesNest.ToString();
-            //lib_Ameisen.Refresh();
-            //lib_Ameisen.BeginUpdate();
-            //lib_Ameisen.Update();
-
-            lib_Ameisen.DataSource = Game.AlleAmeisen;
-            lib_Ameisen.Update();
-            //lib_Ameisen.Items.Clear();
+            lib_Ameisen.Refresh();
+            lib_Nester.Refresh();
         }
 
         public void upd()
@@ -66,43 +53,17 @@ namespace Ameise
             AktivesNest = Game.Nester[0].Idenifier;
             AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
 
-            //foreach (var item in Game.Nester)
-            //{
-            //    lib_Nester.Items.Add(item.Idenifier);
-            //}
-            //lib_Nester.Items.Add(Game.AlleNester[0]);
-            //foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
-            //{
-            //    lib_Ameisen.Items.Add(item.Idenifier);
-            //}
             lib_Ameisen.DataSource = Game.AlleAmeisen;
 
-
-            //lib_Ameisen.DisplayMember = "Pos";
-
-            //lib_Ameisen.DataSource = Game.bindlist;
             lib_Nester.DataSource = Game.AlleNester;
-
-            //bindlist.Add(new Entry(AktiveAmeise, Vector2.One, Color.Red, "Test"));
-
-            //lib_Ameisen.DataSource = this.bindlist;
 
             lib_Ameisen.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             lib_Nester.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-
-            //this.AktiveAmei.DataBindings.Add("Text", this, "AktiveAmeise");
-            //this.AktiveAmei.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-            //this.AktiveNest.DataBindings.Add("Text", this, "AktivesNest");
-            //this.AktiveNest.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-
-            //updateall();
 
             Console.WriteLine("START");
 
             Engine.Marks = Chb_Marks.Checked;
             this.BgW_Ameins.WorkerSupportsCancellation = true;
-
-            //ameise = (new Amei(new Vector2(0, 0), Color.CadetBlue));
 
             //toolStripPos.Text = ameise.Pos.ToString();
 
@@ -137,17 +98,7 @@ namespace Ameise
         private void Btn_SetEnd_Click(object sender, EventArgs e)
         {
             Game.Nester[Nest.getActiveNest(AktivesNest)].depolyAmeiseFromNest(AktivesNest);
-
-            //lib_Ameisen.Items.Clear();
-            //foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
-            //{
-            //    lib_Ameisen.Items.Add(item.Idenifier);
-            //}
-            ////lib_AmeisenImFeld.Items.Clear();
-            //foreach (var item in Nest.getAllAmeiseInField())
-            //{
-            //    lib_AmeisenImFeld.Items.Add(item.ToString());
-            //}
+            updateall();
             Engine.Draw();
         }
 
@@ -165,16 +116,7 @@ namespace Ameise
         {
             Game.Nester[Nest.getActiveNest(AktivesNest)].RecallAmeis();
 
-            //lib_Ameisen.Items.Clear();
-            //foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
-            //{
-            //    lib_Ameisen.Items.Add(item.Idenifier);
-            //}
-            //lib_AmeisenImFeld.Items.Clear();
-            //foreach (var item in Nest.getAllAmeiseInField())
-            //{
-            //    lib_AmeisenImFeld.Items.Add(item.ToString());
-            //}
+            updateall();
 
             Engine.Draw();
         }
@@ -235,22 +177,15 @@ namespace Ameise
 
             toolStripPos.Text = Nest.getAmeiseInField(AktiveAmeise).Pos.ToString();
 
-            Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
-            Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
+            //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
+            //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
 
             Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos = Nest.getAmeiseInField(AktiveAmeise).Pos;
 
-            //this.bindlist[0].Pos = Nest.getAmeiseInField(AktiveAmeise).Pos;
-
-            Console.WriteLine("--------");
-            Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
-            Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
+            //Console.WriteLine("--------");
+            //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
+            //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
             updateall();
-
-            lib_Ameisen.Refresh();
-
-            //lib_Ameisen.DataSource = Game.AlleAmeisen;
-            //lib_Ameisen.Update();
 
             if (e.KeyCode == Keys.Space)
             {
@@ -400,31 +335,21 @@ namespace Ameise
 
         private void lib_Ameisen_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //AktiveAmeise = Guid.Parse(lib_Ameisen.SelectedItem.ToString());
-            //Entry ameise = lib_Ameisen.SelectedItem as Entry;
-            //AktiveAmeise = ameise.Idenifier;
+            // THE OTHER WAY
             AktiveAmeise = ((Entry)lib_Ameisen.SelectedItem).Idenifier;
-            lib_Ameisen.Update();
+            
             updateall();
         }
 
         private void lib_Nester_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //AktivesNest = Guid.Parse(lib_Nester.SelectedItem.ToString());
-            //AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
-            //lib_Ameisen.Items.Clear();
-
-            //foreach (var item in Game.Nester[Nest.getActiveNest(AktivesNest)].ameisen)
-            //{
-            //    lib_Ameisen.Items.Add(item.Idenifier);
-            //}
+            
 
             // THE WAY
             Entry nest = lib_Nester.SelectedItem as Entry;
             AktivesNest = nest.Idenifier;
             AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
-            lib_Nester.Update();
-            AktiveNest.Update();
+            lib_Ameisen.SelectedIndex = Game.AlleAmeisen.FindIndex(n=>n.Idenifier==AktiveAmeise);
             updateall();
         }
 
@@ -433,9 +358,7 @@ namespace Ameise
             AktiveAmeise = Guid.Parse(lib_AmeisenImFeld.SelectedItem.ToString());
         }
 
-        private void lib_Nester_Click(object sender, EventArgs e)
-        {
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -453,24 +376,31 @@ namespace Ameise
 
             // Determine the color of the brush to draw each item based
             // on the index of the item to draw.
-            switch (e.Index)
-            {
-                case 0:
-                    myBrush = Brushes.Red;
-                    break;
 
-                case 1:
-                    myBrush = Brushes.Orange;
-                    break;
-
-                case 2:
-                    myBrush = Brushes.Purple;
-                    break;
-            }
+            myBrush = new SolidBrush(((Entry)lib_Ameisen.Items[e.Index]).Team);
 
             // Draw the current item text based on the current Font
             // and the custom brush settings.
             e.Graphics.DrawString(lib_Ameisen.Items[e.Index].ToString(), e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+            // If the ListBox has focus, draw a focus rectangle around the selected item.
+            e.DrawFocusRectangle();
+        }
+
+        private void lib_Nester_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            // Draw the background of the ListBox control for each item.
+            e.DrawBackground();
+            // Define the default color of the brush as black.
+            Brush myBrush = Brushes.Black;
+
+            // Determine the color of the brush to draw each item based
+            // on the index of the item to draw.
+
+            myBrush = new SolidBrush(((Entry)lib_Nester.Items[e.Index]).Team);
+
+            // Draw the current item text based on the current Font
+            // and the custom brush settings.
+            e.Graphics.DrawString(lib_Nester.Items[e.Index].ToString(), e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
             // If the ListBox has focus, draw a focus rectangle around the selected item.
             e.DrawFocusRectangle();
         }
