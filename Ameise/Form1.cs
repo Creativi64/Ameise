@@ -11,6 +11,7 @@ using System.Threading;
 
 namespace Ameise
 {
+    
     public partial class Form1 : Form
     {
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -46,7 +47,11 @@ namespace Ameise
         {
             AllocConsole();
             InitializeComponent();
-            Thread.Sleep(250);
+            
+             
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.UpdateStyles();
+            //Thread.Sleep(250);
             Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality, true, true, 3);
 
             //Game.Feld[0][0].Nest = this.Nest;
@@ -55,10 +60,27 @@ namespace Ameise
 
             lib_Ameisen.DataSource = Game.AlleAmeisen;
 
+            lib_Ameisen.IntegralHeight = true;
+            Graphics g = lib_Ameisen.CreateGraphics();
+            // Determine the size for HorizontalExtent using the MeasureString method using the last item in the list.
+            int hzSize = (int)g.MeasureString(lib_Ameisen.Items[lib_Ameisen.Items.Count - 1].ToString(), lib_Ameisen.Font).Width;
+            // Set the HorizontalExtent property.
+            lib_Ameisen.HorizontalExtent = hzSize;
+
             lib_Nester.DataSource = Game.AlleNester;
+
+            lib_Nester.IntegralHeight = true;
+            g = lib_Nester.CreateGraphics();
+            // Determine the size for HorizontalExtent using the MeasureString method using the last item in the list.
+            hzSize = (int)g.MeasureString(lib_Nester.Items[lib_Nester.Items.Count - 1].ToString(), lib_Nester.Font).Width;
+            // Set the HorizontalExtent property.
+            lib_Nester.HorizontalExtent = hzSize;
+
+            g.Dispose();
 
             lib_Ameisen.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             lib_Nester.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+             
 
             Console.WriteLine("START");
 
@@ -90,7 +112,7 @@ namespace Ameise
 
         private void Btn_SetStart_Click(object sender, EventArgs e)
         {
-            Game.Nester[Nest.getActiveNest(AktivesNest)].RecallAmeis();
+           
             Game.ResetGame();
             Engine.Draw();
         }
@@ -343,20 +365,25 @@ namespace Ameise
 
         private void lib_Nester_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
             // THE WAY
-            Entry nest = lib_Nester.SelectedItem as Entry;
-            AktivesNest = nest.Idenifier;
-            AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
-            lib_Ameisen.SelectedIndex = Game.AlleAmeisen.FindIndex(n=>n.Idenifier==AktiveAmeise);
+           
+                Entry nest = lib_Nester.SelectedItem as Entry;
+                AktivesNest = nest.Idenifier;
+                AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
+                if (AktiveAmei != null)
+                {
+
+                    lib_Ameisen.SelectedIndex = Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise);
+
+                }
+             
+          
             updateall();
         }
 
-        private void lib_AmeisenImFeld_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AktiveAmeise = Guid.Parse(lib_AmeisenImFeld.SelectedItem.ToString());
-        }
+         
 
         
 
@@ -397,7 +424,7 @@ namespace Ameise
             // on the index of the item to draw.
 
             myBrush = new SolidBrush(((Entry)lib_Nester.Items[e.Index]).Team);
-
+            
             // Draw the current item text based on the current Font
             // and the custom brush settings.
             e.Graphics.DrawString(lib_Nester.Items[e.Index].ToString(), e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);

@@ -515,11 +515,11 @@ namespace Ameise
         public void MoveUp(bool mark = true)
         {
             if (Deployed == true)
-            {
+            {rotation = 270;
+
                 LastPos = pos;
                 int Y = (int)pos.Y;
-                rotation = 270;
-
+                
                 if (--Y >= 0)
                 {
                     if (Game.Feld[(int)Pos.X][Y].State == FieldState.Wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
@@ -542,10 +542,10 @@ namespace Ameise
         public void MoveDown(bool mark = true)
         {
             if (Deployed == true)
-            {
+            {  rotation = 90;
                 LastPos = pos;
                 int Y = (int)pos.Y;
-                rotation = 90;
+              
 
                 if (++Y <= Game.Feld.Count - 1)
                 {
@@ -569,10 +569,10 @@ namespace Ameise
         public void MoveRight(bool mark = true)
         {
             if (Deployed == true)
-            {
+            { rotation = 0;
                 LastPos = pos;
                 int X = (int)pos.X;
-                rotation = 0;
+               
 
                 if (++X <= Game.Feld[0].Count - 1)
                 {
@@ -596,10 +596,10 @@ namespace Ameise
         public void MoveLeft(bool mark = true)
         {
             if (Deployed == true)
-            {
+            {    rotation = 180;
                 LastPos = pos;
                 int X = (int)pos.X;
-                rotation = 180;
+            
 
                 if (--X >= 0)
                 {

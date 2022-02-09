@@ -1,4 +1,7 @@
 ﻿
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace Ameise
 {
     partial class Form1
@@ -52,11 +55,8 @@ namespace Ameise
             this.lib_Ameisen = new System.Windows.Forms.ListBox();
             this.lab_AmeisenImNest = new System.Windows.Forms.Label();
             this.lab_Nester = new System.Windows.Forms.Label();
-            this.lib_AmeisenImFeld = new System.Windows.Forms.ListBox();
-            this.lab_AmeisenImFeld = new System.Windows.Forms.Label();
-            this.AktiveAmei = new System.Windows.Forms.TextBox();
-            this.AktiveNest = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.AktiveAmei = new System.Windows.Forms.Label();
+            this.AktiveNest = new System.Windows.Forms.Label();
             this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -217,20 +217,20 @@ namespace Ameise
             // 
             // lib_Nester
             // 
-            this.lib_Nester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lib_Nester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lib_Nester.FormattingEnabled = true;
             this.lib_Nester.HorizontalScrollbar = true;
             this.lib_Nester.ItemHeight = 15;
             this.lib_Nester.Location = new System.Drawing.Point(12, 176);
             this.lib_Nester.Name = "lib_Nester";
             this.lib_Nester.Size = new System.Drawing.Size(120, 94);
-            this.lib_Nester.TabIndex = 16; 
+            this.lib_Nester.TabIndex = 16;
             this.lib_Nester.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lib_Nester_DrawItem);
             this.lib_Nester.SelectedIndexChanged += new System.EventHandler(this.lib_Nester_SelectedIndexChanged);
             // 
             // lib_Ameisen
             // 
-            this.lib_Ameisen.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lib_Ameisen.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lib_Ameisen.FormattingEnabled = true;
             this.lib_Ameisen.HorizontalScrollbar = true;
             this.lib_Ameisen.ItemHeight = 15;
@@ -259,64 +259,33 @@ namespace Ameise
             this.lab_Nester.TabIndex = 19;
             this.lab_Nester.Text = "Nester";
             // 
-            // lib_AmeisenImFeld
-            // 
-            this.lib_AmeisenImFeld.FormattingEnabled = true;
-            this.lib_AmeisenImFeld.HorizontalScrollbar = true;
-            this.lib_AmeisenImFeld.ItemHeight = 15;
-            this.lib_AmeisenImFeld.Location = new System.Drawing.Point(841, 115);
-            this.lib_AmeisenImFeld.Name = "lib_AmeisenImFeld";
-            this.lib_AmeisenImFeld.Size = new System.Drawing.Size(120, 94);
-            this.lib_AmeisenImFeld.TabIndex = 20;
-            this.lib_AmeisenImFeld.SelectedIndexChanged += new System.EventHandler(this.lib_AmeisenImFeld_SelectedIndexChanged);
-            // 
-            // lab_AmeisenImFeld
-            // 
-            this.lab_AmeisenImFeld.AutoSize = true;
-            this.lab_AmeisenImFeld.Location = new System.Drawing.Point(841, 97);
-            this.lab_AmeisenImFeld.Name = "lab_AmeisenImFeld";
-            this.lab_AmeisenImFeld.Size = new System.Drawing.Size(92, 15);
-            this.lab_AmeisenImFeld.TabIndex = 21;
-            this.lab_AmeisenImFeld.Text = "Ameisen m Feld";
-            // 
             // AktiveAmei
             // 
-            this.AktiveAmei.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.AktiveAmei.Location = new System.Drawing.Point(13, 506);
+            this.AktiveAmei.AutoSize = true;
+            this.AktiveAmei.BackColor = System.Drawing.Color.Transparent;
+            this.AktiveAmei.Location = new System.Drawing.Point(12, 501);
             this.AktiveAmei.Name = "AktiveAmei";
-            this.AktiveAmei.ReadOnly = true;
-            this.AktiveAmei.Size = new System.Drawing.Size(294, 23);
-            this.AktiveAmei.TabIndex = 22;
+            this.AktiveAmei.Size = new System.Drawing.Size(10, 15);
+            this.AktiveAmei.TabIndex = 24;
+            this.AktiveAmei.Text = ".";
             // 
             // AktiveNest
             // 
-            this.AktiveNest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.AktiveNest.Location = new System.Drawing.Point(12, 535);
+            this.AktiveNest.AutoSize = true;
+            this.AktiveNest.BackColor = System.Drawing.Color.Transparent;
+            this.AktiveNest.Location = new System.Drawing.Point(12, 530);
             this.AktiveNest.Name = "AktiveNest";
-            this.AktiveNest.ReadOnly = true;
-            this.AktiveNest.Size = new System.Drawing.Size(295, 23);
-            this.AktiveNest.TabIndex = 23;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(139, 388);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.AktiveNest.Size = new System.Drawing.Size(10, 15);
+            this.AktiveNest.TabIndex = 25;
+            this.AktiveNest.Text = ".";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 613);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.AktiveNest);
             this.Controls.Add(this.AktiveAmei);
-            this.Controls.Add(this.lab_AmeisenImFeld);
-            this.Controls.Add(this.lib_AmeisenImFeld);
             this.Controls.Add(this.lab_Nester);
             this.Controls.Add(this.lab_AmeisenImNest);
             this.Controls.Add(this.lib_Ameisen);
@@ -366,13 +335,12 @@ namespace Ameise
         private System.Windows.Forms.Button Recall;
         private System.Windows.Forms.Label lab_AmeisenImNest;
         private System.Windows.Forms.Label lab_Nester;
-        private System.Windows.Forms.ListBox lib_AmeisenImFeld;
-        private System.Windows.Forms.Label lab_AmeisenImFeld;
-        private System.Windows.Forms.TextBox AktiveAmei;
-        private System.Windows.Forms.TextBox AktiveNest;
         public System.Windows.Forms.ListBox lib_Nester;
-        private System.Windows.Forms.Button button1;
-        public System.Windows.Forms.ListBox lib_Ameisen;
+        private System.Windows.Forms.ListBox lib_Ameisen;
+        private Label AktiveAmei;
+        private Label AktiveNest;
     }
+
+   
 }
 

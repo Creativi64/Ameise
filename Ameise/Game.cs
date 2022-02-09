@@ -86,7 +86,6 @@ namespace Ameise
             FeldGrafik.TranslateTransform(StartX, StartY);
 
             Game.GraficMode = GraficMode;
-  
 
             if (PlaceBlocksItems)
             {
@@ -109,7 +108,6 @@ namespace Ameise
                         foreach (var Ameise in Nester[Nester.Count - 1].ameisen)
                         {
                             AlleAmeisen.Add(new Entry(Ameise.Idenifier, Ameise.Pos, Ameise.Team, Ameise.Team.ToString()));
-                            
                         }
                     }
                     if (posNestX + 2 <= Game.Feld[0].Count - 1)
@@ -278,20 +276,14 @@ namespace Ameise
 
         public static void ResetGame()
         {
-            // Update so that the Ameise Returns
-
-            RemoveBlocksItems();
-            for (int i = 0; i < Feld.Count; i++)
+            foreach (var item in Nester)
             {
-                for (int a = 0; a < Feld[i].Count; a++)
-                {
-                    Feld[a][i].Item.Clear();
-                    Feld[a][i].State = FieldState.Wakable;
-                }
+                item.RecallAmeis();
             }
-            PlaceBocksItems();
+            RemoveBlocksItems();
 
-            Feld[0][0].State = FieldState.Wakable;
+            PlaceBocksItems();
+            createPerimeter();
         }
 
         public static void RemoveBlocksItems()
@@ -364,7 +356,7 @@ namespace Ameise
 
             foreach (var item in items)
             {
-                if (Feld[item.X][item.Y].State != FieldState.NotWakable && Feld[item.X][item.Y].State != FieldState.Blocked)
+                if (Feld[item.X][item.Y].State != FieldState.NotWakable || Feld[item.X][item.Y].State != FieldState.Blocked)
                 {
                     Items++;
                     Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), items.Count.ToString()));
