@@ -36,11 +36,11 @@ namespace AmeisenGame
 
         public static readonly int Abstand = (1 * Scaling);
 
-        public static readonly int Height_Y = (16 + Abstand) * Scaling;
+        public static readonly int Height_Y = (25 + Abstand) * Scaling;
 
         public static readonly int Height_X = Height_Y;
 
-        public static readonly int With = 50;
+        public static readonly int With = 20;
 
         public static readonly int Height = With;
 

@@ -5,7 +5,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Numerics;
 using System.Diagnostics;
-
+using BenchmarkDotNet.Parameters;
+using BenchmarkDotNet.Attributes;
 
 namespace AmeisenGame
 {
@@ -117,8 +118,9 @@ namespace AmeisenGame
             return surrounded;
         }
 
-        
-        public void Collect(Amei amei, BackgroundWorker bw)
+       
+         
+        public void Collect(Amei amei, BackgroundWorker bw = null)
         {
             TimeSpan ts;
             string elapsedTime;
@@ -130,21 +132,23 @@ namespace AmeisenGame
                 //GC.Collect(1,GCCollectionMode.Forced);
                 GC.WaitForPendingFinalizers();
 
-                if (bw.CancellationPending)
+                if (bw != null)
                 {
-                    stopWatch.Stop();
-                    timesearched += stopWatch.ElapsedTicks;
-                    Console.WriteLine("##########################");
-                    ts = new TimeSpan(timesearched);
-                    elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                    ts.Hours, ts.Minutes, ts.Seconds,
-                    ts.Milliseconds / 10);
-                    Console.WriteLine("Time Elapesed: " + elapsedTime);
+                    if (bw.CancellationPending)
+                    {
+                        stopWatch.Stop();
+                        timesearched += stopWatch.ElapsedTicks;
+                        Console.WriteLine("##########################");
+                        ts = new TimeSpan(timesearched);
+                        elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                        ts.Hours, ts.Minutes, ts.Seconds,
+                        ts.Milliseconds / 10);
+                        Console.WriteLine("Time Elapesed: " + elapsedTime);
 
-                    Console.WriteLine("##########################");
-                    break;
+                        Console.WriteLine("##########################");
+                        break;
+                    }
                 }
-
                 ////Console.WriteLine(GC.GetTotalMemory(true));
                 amei.Search();
 
@@ -338,7 +342,7 @@ namespace AmeisenGame
 
         private int rotation;
 
-        private Brain brn;
+        public readonly Brain brn;
 
         private Stack<Item> inventar = new();
 
@@ -368,7 +372,7 @@ namespace AmeisenGame
             //Game.Feld[(int)Position.X][(int)Position.Y].Ameis = this;
             Amei.AnzahlAmeisen++;
         }
-
+ 
         public void StartCollect(BackgroundWorker bw)
         {
             if (Deployed == true)
