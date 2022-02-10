@@ -5,15 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using System.Drawing;
-using System.ComponentModel;
+ 
 
-using System.Data;
-
-using System.Windows.Forms;
-
-using System.Runtime.CompilerServices;
-
-namespace Ameise
+namespace AmeisenGame
 {
     public class Entry
     {

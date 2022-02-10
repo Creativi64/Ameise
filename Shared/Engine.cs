@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
-namespace Ameise
+namespace AmeisenGame
 {
     public class Engine
     {
@@ -174,10 +174,7 @@ namespace Ameise
 
             FeldGrafik.DrawImage(til.FeldVoll, new Point(-40, 50));
             FeldGrafik.DrawImage(til.FeldLeer, new Point(-40, 100));
-            FeldGrafik.DrawImage(til.FeldX, new Point(-40, 150));
-            //Game.GesamtFeld.DrawImage(til.FeldPath, new Point(-40, 200));
-            //Game.GesamtFeld.DrawImage(til.FeldZiel, new Point(-40, 250));
-            //Game.GesamtFeld.DrawImage(til.FeldStart, new Point(-40, 300));
+            FeldGrafik.DrawImage(til.FeldX, new Point(-40, 150)); 
 
             for (int i = 0; i < Game.Feld.Count; i++)
             {

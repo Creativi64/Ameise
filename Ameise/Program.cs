@@ -1,3 +1,4 @@
+using BenchmarkDotNet.Running;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,12 @@ namespace Ameise
         [STAThread]
         static void Main()
         {
-             
+
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-           
+
         }
     }
 }

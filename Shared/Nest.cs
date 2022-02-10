@@ -7,7 +7,7 @@ using System.Numerics;
 using System.Drawing;
 using System.Threading;
 
-namespace Ameise
+namespace AmeisenGame
 {
     public class Nest
     {

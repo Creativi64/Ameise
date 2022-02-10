@@ -57,6 +57,8 @@ namespace Ameise
             this.lab_Nester = new System.Windows.Forms.Label();
             this.AktiveAmei = new System.Windows.Forms.Label();
             this.AktiveNest = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.MenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -263,7 +265,7 @@ namespace Ameise
             // 
             this.AktiveAmei.AutoSize = true;
             this.AktiveAmei.BackColor = System.Drawing.Color.Transparent;
-            this.AktiveAmei.Location = new System.Drawing.Point(12, 501);
+            this.AktiveAmei.Location = new System.Drawing.Point(13, 509);
             this.AktiveAmei.Name = "AktiveAmei";
             this.AktiveAmei.Size = new System.Drawing.Size(10, 15);
             this.AktiveAmei.TabIndex = 24;
@@ -273,17 +275,37 @@ namespace Ameise
             // 
             this.AktiveNest.AutoSize = true;
             this.AktiveNest.BackColor = System.Drawing.Color.Transparent;
-            this.AktiveNest.Location = new System.Drawing.Point(12, 530);
+            this.AktiveNest.Location = new System.Drawing.Point(13, 543);
             this.AktiveNest.Name = "AktiveNest";
             this.AktiveNest.Size = new System.Drawing.Size(10, 15);
             this.AktiveNest.TabIndex = 25;
             this.AktiveNest.Text = ".";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 494);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 15);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "AktiveAmei";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 528);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 15);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "AktiveNest";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 613);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.AktiveNest);
             this.Controls.Add(this.AktiveAmei);
             this.Controls.Add(this.lab_Nester);
@@ -339,6 +361,8 @@ namespace Ameise
         private System.Windows.Forms.ListBox lib_Ameisen;
         private Label AktiveAmei;
         private Label AktiveNest;
+        private Label label1;
+        private Label label2;
     }
 
    

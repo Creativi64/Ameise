@@ -6,7 +6,8 @@ using System.Drawing;
 using System.Numerics;
 using System.Diagnostics;
 
-namespace Ameise
+
+namespace AmeisenGame
 {
     public class Brain
     {
@@ -56,14 +57,14 @@ namespace Ameise
             if (amei.Pos.X + 1 >= Game.Feld[0].Count)
             {
                 surrounded++;
-                Console.WriteLine("Rightnone");
+                //Console.WriteLine("Rightnone");
             }
             else
             {
                 if (Game.Feld[(int)amei.Pos.X + 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                 {
                     surrounded++;
-                    Console.WriteLine("Right");
+                    //Console.WriteLine("Right");
                 }
             }
 
@@ -71,14 +72,14 @@ namespace Ameise
             if (amei.Pos.X - 1 < 0)
             {
                 surrounded++;
-                Console.WriteLine("leftnone");
+                //Console.WriteLine("leftnone");
             }
             else
             {
                 if (Game.Feld[(int)amei.Pos.X - 1][(int)amei.Pos.Y].State == FieldState.NotWakable)
                 {
                     surrounded++;
-                    Console.WriteLine("left");
+                    //Console.WriteLine("left");
                 }
             }
 
@@ -86,14 +87,14 @@ namespace Ameise
             if (amei.Pos.Y - 1 < 0)
             {
                 surrounded++;
-                Console.WriteLine("Abovenone");
+                //Console.WriteLine("Abovenone");
             }
             else
             {
                 if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y - 1].State == FieldState.NotWakable)
                 {
                     surrounded++;
-                    Console.WriteLine("Above");
+                    //Console.WriteLine("Above");
                 }
             }
 
@@ -101,21 +102,22 @@ namespace Ameise
             if (amei.Pos.Y + 1 >= Game.Feld.Count)
             {
                 surrounded++;
-                Console.WriteLine("belownone");
+                //Console.WriteLine("belownone");
             }
             else
             {
                 if (Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y + 1].State == FieldState.NotWakable)
                 {
                     surrounded++;
-                    Console.WriteLine("below");
+                    //Console.WriteLine("below");
                 }
             }
 
-            Console.WriteLine("----");
+            //Console.WriteLine("----");
             return surrounded;
         }
 
+        
         public void Collect(Amei amei, BackgroundWorker bw)
         {
             TimeSpan ts;
@@ -143,7 +145,7 @@ namespace Ameise
                     break;
                 }
 
-                //Console.WriteLine(GC.GetTotalMemory(true));
+                ////Console.WriteLine(GC.GetTotalMemory(true));
                 amei.Search();
 
                 GC.Collect();
@@ -183,7 +185,7 @@ namespace Ameise
                         else
                         {
                             this.positionen.Clear();
-                            Console.WriteLine("kein weg");
+                            //Console.WriteLine("kein weg");
 
                             return;
                         }
@@ -193,8 +195,8 @@ namespace Ameise
                 {
                     Random rnd = new Random();
 
-                    //Console.WriteLine($"curr {Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert}");
-                    //Console.WriteLine($"last {Feld[(int)amei.LastPos.X][(int)amei.LastPos.Y].Marks[0].Wert}");
+                    ////Console.WriteLine($"curr {Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert}");
+                    ////Console.WriteLine($"last {Feld[(int)amei.LastPos.X][(int)amei.LastPos.Y].Marks[0].Wert}");
                     switch (rnd.Next(1, 5))
                     {
                         case 1:
@@ -208,9 +210,9 @@ namespace Ameise
                                     if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
-                                        Console.WriteLine("surrounded");
+                                        //Console.WriteLine("surrounded");
                                     }
-                                    Console.WriteLine("----");
+                                    //Console.WriteLine("----");
                                 }
                                 else
                                 {
@@ -231,9 +233,9 @@ namespace Ameise
                                     if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
-                                        Console.WriteLine("surrounded");
+                                        //Console.WriteLine("surrounded");
                                     }
-                                    Console.WriteLine("----");
+                                    //Console.WriteLine("----");
                                 }
                                 else
                                 {
@@ -254,9 +256,9 @@ namespace Ameise
                                     if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
-                                        Console.WriteLine("surrounded");
+                                        //Console.WriteLine("surrounded");
                                     }
-                                    Console.WriteLine("----");
+                                    //Console.WriteLine("----");
                                 }
                                 else
                                 {
@@ -277,9 +279,9 @@ namespace Ameise
                                     if (checksourroundings(amei) >= 3)
                                     {
                                         Game.Feld[(int)amei.Pos.X][(int)amei.Pos.Y].Marks[0].Wert += 1000;
-                                        Console.WriteLine("surrounded");
+                                        //Console.WriteLine("surrounded");
                                     }
-                                    Console.WriteLine("----");
+                                    //Console.WriteLine("----");
                                 }
                                 else
                                 {
@@ -309,7 +311,7 @@ namespace Ameise
             stopWatch.Stop();
             timesearched += stopWatch.ElapsedTicks;
 
-            Console.WriteLine("Alles einegesammelt oder Beendet");
+            //Console.WriteLine("Alles einegesammelt oder Beendet");
             Console.WriteLine("##########################");
 
             ts = new TimeSpan(timesearched);
@@ -508,6 +510,7 @@ namespace Ameise
             if (this.Deployed == false)
             {
                 this.pos = brn.NestPos;
+                Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == this.Idenifier)].Pos = this.pos;
                 this.LastPos = brn.NestPos;
             }
         }
@@ -515,11 +518,12 @@ namespace Ameise
         public void MoveUp(bool mark = true)
         {
             if (Deployed == true)
-            {rotation = 270;
+            {
+                rotation = 270;
 
                 LastPos = pos;
                 int Y = (int)pos.Y;
-                
+
                 if (--Y >= 0)
                 {
                     if (Game.Feld[(int)Pos.X][Y].State == FieldState.Wakable && Game.Feld[(int)Pos.X][Y].Ameis == null && Game.Feld[(int)Pos.X][Y].Nest == null)
@@ -532,20 +536,19 @@ namespace Ameise
                         {
                             Game.Feld[(int)Pos.X][(int)Pos.Y].Marks[0].Wert++;
                         }
-
-                        Engine.Draw();
                     }
                 }
+                Engine.Draw();
             }
         }
 
         public void MoveDown(bool mark = true)
         {
             if (Deployed == true)
-            {  rotation = 90;
+            {
+                rotation = 90;
                 LastPos = pos;
                 int Y = (int)pos.Y;
-              
 
                 if (++Y <= Game.Feld.Count - 1)
                 {
@@ -559,20 +562,19 @@ namespace Ameise
                         {
                             Game.Feld[(int)Pos.X][(int)Pos.Y].Marks[0].Wert++;
                         }
-
-                        Engine.Draw();
                     }
                 }
+                Engine.Draw();
             }
         }
 
         public void MoveRight(bool mark = true)
         {
             if (Deployed == true)
-            { rotation = 0;
+            {
+                rotation = 0;
                 LastPos = pos;
                 int X = (int)pos.X;
-               
 
                 if (++X <= Game.Feld[0].Count - 1)
                 {
@@ -586,20 +588,19 @@ namespace Ameise
                         {
                             Game.Feld[(int)Pos.X][(int)Pos.Y].Marks[0].Wert++;
                         }
-
-                        Engine.Draw();
                     }
                 }
+                Engine.Draw();
             }
         }
 
         public void MoveLeft(bool mark = true)
         {
             if (Deployed == true)
-            {    rotation = 180;
+            {
+                rotation = 180;
                 LastPos = pos;
                 int X = (int)pos.X;
-            
 
                 if (--X >= 0)
                 {
@@ -614,10 +615,9 @@ namespace Ameise
                         {
                             Game.Feld[(int)Pos.X][(int)Pos.Y].Marks[0].Wert++;
                         }
-
-                        Engine.Draw();
                     }
                 }
+                Engine.Draw();
             }
         }
 
@@ -639,7 +639,7 @@ namespace Ameise
                 }
                 else
                 {
-                    Console.WriteLine("hier ist Nix");
+                    //Console.WriteLine("hier ist Nix");
                 }
             }
         }
@@ -840,7 +840,7 @@ namespace Ameise
 
                 if (path != null)
                 {
-                    Console.WriteLine($"Pos {item.ToString()} nutzbar");
+                    //Console.WriteLine($"Pos {item.ToString()} nutzbar");
                     //move
                     foreach (var pat in path)
                     {
@@ -865,9 +865,9 @@ namespace Ameise
                     return true;
                 }
 
-                Console.WriteLine($"Pos {item.ToString()} nicht nutzbar");
+                //Console.WriteLine($"Pos {item.ToString()} nicht nutzbar");
             }
-            Console.WriteLine("Keinene Weg nach hause Gefunden");
+            //Console.WriteLine("Keinene Weg nach hause Gefunden");
             return false;
         }
 

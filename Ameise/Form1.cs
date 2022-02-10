@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using AmeisenGame;
 
-namespace Ameise
+namespace Ameise 
 {
-    
     public partial class Form1 : Form
     {
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -37,22 +37,16 @@ namespace Ameise
             lib_Ameisen.Refresh();
             lib_Nester.Refresh();
         }
-
-        public void upd()
-        {
-            Console.WriteLine("the List changeds");
-        }
-
+  
         public Form1()
         {
             AllocConsole();
             InitializeComponent();
-            
-             
+
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.UpdateStyles();
             //Thread.Sleep(250);
-            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighQuality, true, true, 3);
+            Game.init(this.CreateGraphics(), this.Size.Width, this.Size.Height, SmoothingMode.HighSpeed, true, true, 3);
 
             //Game.Feld[0][0].Nest = this.Nest;
             AktivesNest = Game.Nester[0].Idenifier;
@@ -80,7 +74,6 @@ namespace Ameise
 
             lib_Ameisen.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             lib_Nester.DataBindings.DefaultDataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
-             
 
             Console.WriteLine("START");
 
@@ -112,7 +105,6 @@ namespace Ameise
 
         private void Btn_SetStart_Click(object sender, EventArgs e)
         {
-           
             Game.ResetGame();
             Engine.Draw();
         }
@@ -179,51 +171,75 @@ namespace Ameise
             if (e.KeyCode == Keys.Up)
             {
                 Console.WriteLine("Up");
-                Nest.getAmeiseInField(AktiveAmeise).MoveUp();
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
+                {
+                    Nest.getAmeiseInField(AktiveAmeise).MoveUp();
+                } 
             }
             if (e.KeyCode == Keys.Down)
             {
                 Console.WriteLine("Down");
-                Nest.getAmeiseInField(AktiveAmeise).MoveDown();
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
+                {
+                    Nest.getAmeiseInField(AktiveAmeise).MoveDown();
+                } 
             }
             if (e.KeyCode == Keys.Right)
             {
                 Console.WriteLine("Right");
-                Nest.getAmeiseInField(AktiveAmeise).MoveRight();
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
+                {
+                    Nest.getAmeiseInField(AktiveAmeise).MoveRight();
+                } 
             }
             if (e.KeyCode == Keys.Left)
             {
                 Console.WriteLine("Left");
-                Nest.getAmeiseInField(AktiveAmeise).MoveLeft();
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
+                {
+                    Nest.getAmeiseInField(AktiveAmeise).MoveLeft();
+                } 
             }
 
-            toolStripPos.Text = Nest.getAmeiseInField(AktiveAmeise).Pos.ToString();
+            if (Nest.getAmeiseInField(AktiveAmeise) != null)
+            {
+                toolStripPos.Text = Nest.getAmeiseInField(AktiveAmeise).Pos.ToString();
 
-            //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
-            //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
+                //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
+                //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
 
-            Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos = Nest.getAmeiseInField(AktiveAmeise).Pos;
+                Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos = Nest.getAmeiseInField(AktiveAmeise).Pos;
 
-            //Console.WriteLine("--------");
-            //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
-            //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
-            updateall();
+                //Console.WriteLine("--------");
+                //Console.WriteLine(Game.AlleAmeisen[Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise)].Pos);
+                //Console.WriteLine(Nest.getAmeiseInField(AktiveAmeise).Pos);
+                updateall();
+            }
+             
 
             if (e.KeyCode == Keys.Space)
             {
                 Console.WriteLine("TryCollect");
-                Nest.getAmeiseInField(AktiveAmeise).TryCollect();
-                foreach (var item in Nest.getAmeiseInField(AktiveAmeise).Inventar)
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
                 {
-                    Console.WriteLine(item.Name);
+                    Nest.getAmeiseInField(AktiveAmeise).TryCollect();
+                    foreach (var item in Nest.getAmeiseInField(AktiveAmeise).Inventar)
+                    {
+                        Console.WriteLine(item.Name);
+                    }
                 }
+                 
             }
 
             if (e.KeyCode == Keys.Enter)
             {
                 Console.WriteLine("TryPlace");
-                Nest.getAmeiseInField(AktiveAmeise).TryPlaceBlock();
-                Engine.Draw();
+                if (Nest.getAmeiseInField(AktiveAmeise) != null)
+                {
+
+                    Nest.getAmeiseInField(AktiveAmeise).TryPlaceBlock();
+                    Engine.Draw();
+                }
             }
             if (e.KeyCode == Keys.S)
             {
@@ -231,8 +247,7 @@ namespace Ameise
                 {
                     Console.WriteLine("Suche");
                     st = new Stopwatch();
-
-                    //ameise.Search(Fld);
+                     
                     st.Start();
                     TimeSpan ts;
                     this.BgW_Ameins.RunWorkerAsync();
@@ -359,33 +374,24 @@ namespace Ameise
         {
             // THE OTHER WAY
             AktiveAmeise = ((Entry)lib_Ameisen.SelectedItem).Idenifier;
-            
+
             updateall();
         }
 
         private void lib_Nester_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
             // THE WAY
-           
-                Entry nest = lib_Nester.SelectedItem as Entry;
-                AktivesNest = nest.Idenifier;
-                AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
-                if (AktiveAmei != null)
-                {
 
-                    lib_Ameisen.SelectedIndex = Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise);
+            Entry nest = lib_Nester.SelectedItem as Entry;
+            AktivesNest = nest.Idenifier;
+            AktiveAmeise = Nest.peekFirstAmeiseFromNest(AktivesNest).Idenifier;
+            if (AktiveAmei != null)
+            {
+                lib_Ameisen.SelectedIndex = Game.AlleAmeisen.FindIndex(n => n.Idenifier == AktiveAmeise);
+            }
 
-                }
-             
-          
             updateall();
         }
-
-         
-
-        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -424,7 +430,7 @@ namespace Ameise
             // on the index of the item to draw.
 
             myBrush = new SolidBrush(((Entry)lib_Nester.Items[e.Index]).Team);
-            
+
             // Draw the current item text based on the current Font
             // and the custom brush settings.
             e.Graphics.DrawString(lib_Nester.Items[e.Index].ToString(), e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);

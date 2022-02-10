@@ -8,12 +8,11 @@ using AStarSharp;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.CompilerServices;
-
 using System.ComponentModel;
 
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
-namespace Ameise
+namespace AmeisenGame
 {
     public class Game
     {
@@ -37,11 +36,11 @@ namespace Ameise
 
         public static readonly int Abstand = (1 * Scaling);
 
-        public static readonly int Height_Y = (25 + Abstand) * Scaling;
+        public static readonly int Height_Y = (16 + Abstand) * Scaling;
 
         public static readonly int Height_X = Height_Y;
 
-        public static readonly int With = 20;
+        public static readonly int With = 50;
 
         public static readonly int Height = With;
 
@@ -70,7 +69,7 @@ namespace Ameise
          */
 
         /// <summary>
-        /// NEED TO be done to WORK
+        /// NEED TO be done to work properly
         /// </summary>
         /// <param name="FeldGrafik">A grafic that should be drawn on</param>
         /// <param name="With">The With of the Form</param>
@@ -127,13 +126,27 @@ namespace Ameise
                     }
                 }
             }
-            createPerimeter();
-            //Engine observable = new Engine();
-            //Observer observer = new Observer();
-            //observable.SomethingHappened += observer.HandleEvent;
-
-            //observable.DoSomething();
+            createPerimeter(); 
         }
+
+        static Game()
+        {
+            Feld = new List<List<Tile>>();
+
+            for (int i = 0; i < Game.With; i++)
+            {
+                Feld.Add(new List<Tile>());
+                for (int a = 0; a < Height; a++)
+                {
+                    Feld[i].Add(new Tile(new Point(i * (Height_X + Abstand), a * (Height_Y + Abstand)), Height_X, Height_Y, Abstand, FieldState.Wakable));
+                }
+            }
+            StartX = 100;
+            StartY = 100;
+            FieldInitialized = true;
+        }
+
+        // Funktions ------------
 
         private static void createPerimeter()
         {
@@ -255,25 +268,6 @@ namespace Ameise
             }
         }
 
-        static Game()
-        {
-            Feld = new List<List<Tile>>();
-
-            for (int i = 0; i < Game.With; i++)
-            {
-                Feld.Add(new List<Tile>());
-                for (int a = 0; a < Height; a++)
-                {
-                    Feld[i].Add(new Tile(new Point(i * (Height_X + Abstand), a * (Height_Y + Abstand)), Height_X, Height_Y, Abstand, FieldState.Wakable));
-                }
-            }
-            StartX = 100;
-            StartY = 100;
-            FieldInitialized = true;
-        }
-
-        // Funktions ------------
-
         public static void ResetGame()
         {
             foreach (var item in Nester)
@@ -356,7 +350,7 @@ namespace Ameise
 
             foreach (var item in items)
             {
-                if (Feld[item.X][item.Y].State != FieldState.NotWakable || Feld[item.X][item.Y].State != FieldState.Blocked)
+                if (Feld[item.X][item.Y].State == FieldState.Wakable)
                 {
                     Items++;
                     Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), items.Count.ToString()));
@@ -421,7 +415,7 @@ namespace Ameise
             int ii = 0;
             foreach (var item in items)
             {
-                if (Feld[item.X][item.Y].State != FieldState.NotWakable && Feld[item.X][item.Y].State != FieldState.Blocked)
+                if (Feld[item.X][item.Y].State == FieldState.Wakable)
                 {
                     Feld[item.X][item.Y].Item.Push(new Item(new Vector2(item.X, item.Y), ii.ToString()));
                     ii++;
